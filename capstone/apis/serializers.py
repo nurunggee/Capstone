@@ -7,6 +7,5 @@ class YgtSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'title',
-            'description',
         )
         model = models.Ygt

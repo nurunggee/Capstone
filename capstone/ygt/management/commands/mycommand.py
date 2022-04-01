@@ -15,12 +15,10 @@ class Command(BaseCommand):
             13: "Shoulders"
         }
 
-
-
         Exercise.objects.all().delete()
         Category.objects.all().delete()
 
-        exercises = requests.get("https://wger.de/api/v2/exercise", params = {'limit':1000,'language':2, 'equipment':7}).json()
+        exercises = requests.get("https://wger.de/api/v2/exercise", params = {'limit':500,'language':2, 'equipment':7}).json()
         print(len(exercises["results"]))
         for exercise in exercises['results']:
             exercise_obj = Exercise.objects.create(

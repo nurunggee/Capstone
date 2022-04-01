@@ -1,5 +1,6 @@
 from pydoc import describe
 from django.db import models
+from users.models import CustomUser
 
 class Ygt(models.Model):
     title = models.CharField(max_length=200)
@@ -11,7 +12,6 @@ class Exercise(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
     # categories
-    
 
     def __str__(self):
         return self.name

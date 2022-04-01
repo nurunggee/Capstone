@@ -1,7 +1,7 @@
 from rest_framework import generics, viewsets, permissions, filters
-
-from ygt import models
-from .serializers import YgtSerializer
+from ygt.models import Exercise, Category, Ygt, CustomUser
+from .serializers import YgtSerializer, ExerciseSerializer, CategorySerializer, UserSerializer
+from users.models import CustomUser
 
 # class ListYgt(generics.ListCreateAPIView):
 #     queryset = models.Ygt.objects.all()
@@ -14,7 +14,31 @@ from .serializers import YgtSerializer
 
 
 class YgtViewSet(viewsets.ModelViewSet):
-    queryset = models.Ygt.objects.all()
+    queryset = Ygt.objects.all()
     serializer_class = YgtSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['title']
+
+class ExerciseViewSet(viewsets.ModelViewSet):
+    queryset = Exercise.objects.all()
+    serializer_class = ExerciseSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['name']
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['category']
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['username']
+
+class CurrentUserView(generics.RetrieveUpdateAPIView):
+    serializer_class = UserSerializer
+    
+    def get_object(self):
+        return self.request.user

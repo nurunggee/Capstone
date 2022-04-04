@@ -555,6 +555,7 @@ input:focus::placeholder {
 .date {
   text-align: center;
   display: flex;
+  font-size: 20px;
 }
 .date {
   flex-wrap: wrap;

@@ -1,3 +1,4 @@
+// IT'S FOR NAV UI
 
 const indicator = document.querySelector("[data-indicator]")
 

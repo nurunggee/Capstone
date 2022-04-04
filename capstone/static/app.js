@@ -1,10 +1,14 @@
 // TASKS:
 
-// 1. Number has a default value of something
-// 2. Prepare, work out, rest has a default value of 00:00
-// 3. How to add prepare and run only during cycles?
-// 4. When I click start, start button change to pause, when I click pause, the timer stops
-// 5. When the exercise starts, total time will be in "exercise" and the timer will be inside of the biggest box
+// 1. Number has a default value of something(if totalTime is NaN:NaN, it doesn't start)
+// 2. Prepare + (work out + rest) * cycles 
+// 3. When I click start, start button change to pause, when I click pause, the timer stops
+// 4. When the exercise starts, total time will be in "exercise" and the timer will be inside of the biggest box
+// 5. Add countdown sound on Workout and Rest timers
+// 6. Add logo under the cycle box
+// 7. When Nav is clicked, it goes to each page.
+
+// 8. Needs to working on Calendar too
 
 ////////////////////////////////// PREPARE TIMER //////////////////////////////////
 Vue.component("prepare-timer", {
@@ -24,6 +28,10 @@ Vue.component("prepare-timer", {
         timerActive: {
             type: Boolean
         },
+        totalTimeLeft: {
+            type: Number,
+            default: 3
+        }
     },
 
 
@@ -198,9 +206,21 @@ Vue.component("workout-timer", {
 
         remainingPathColor() {
             const { info } = this.colorCodes;
+            let alert = 3;
+            let sound = new Audio("./countdown.mp3")
+            if (this.timeLeft <= alert){
+                sound.play()
+            }
             return info.color;
         },
 
+        alertSound(){
+            let alert = 3;
+            let sound = new Audio("countdown.mp3")
+            if (this.timeLeft <= alert){
+                sound.play()
+            }
+        }
     },
 
 
@@ -464,48 +484,49 @@ Vue.component("calendar", {
         }
     },
 
+    methods: {
+        next() {
+            if(this.currentMonthInNumber===11){
+                this.currentYear++
+                this.currentMonthInNumber=0
+            }else{
+                this.currentMonthInNumber++
+            }
+        }, 
+        
+        prev() {
+            if(this.currentMonthInNumber===0){
+                this.currentYear--
+                this.currentMonthInNumber=11
+            }
+            else{
+                this.currentMonthInNumber--
+            }
+        },
 
-    // methods: {
-    //     prev(){
-    //         if(this.currentMonthInNumber === 0){
-    //             this.currentYear--
-    //             this.currentMonthInNumber=11
-    //         }else{
-    //             this.currentMonthInNumber--        
-    //         }
-    //     },
-    //     next(){
-    //         if(this.currentMonthInNumber === 11){
-    //             this.currentYear++
-    //             this.currentMonthInNumber=0
-    //         }else{
-    //             this.currentMonthInNumber++         
-    //         }
-    //     },
-    //     todayDate(date){
-    //         let calendarDate = new Date(this.currentYear, this.currentMonthInNumber, date).toDateString()
-    //         let toDay = new Date().toDateString()
-
-    //         return calendarDate=== toDay ? "bg-primary text-white" : ""
-    //     }
-    // },
-
-    // computed: {
-    //     currentMonthName(){
-    //         return new Date(this.currentYear, this.currentMonthInNumber).toLocaleString("default", {month:"long"})
-    //     },
-    //     lastDateOfMonth(){
-    //         return new Date(this.currentYear, this.currentMonthInNumber+1, 0).getDate()
-    //     },
-    //     firstDay(){
-    //         return new Date(this.currentYear, this.currentMonthInNumber, 1).getDay()
-    //     }
-    // },
+        todayDate(date){
+            let calenderDate = new Date(this.currentYear, this.currentMonthInNumber, date).toDateString()
+            let toDay = new Date().toDateString()
+            return calenderDate === toDay ? "text-primary" : ""
+        }
+    },
+    
+    computed:{
+        currentMonthInName(){
+          return new Date(this.currentYear,this.currentMonthInNumber).toLocaleString("default", {month: "long"})
+        },
+        daysInMonth(){
+            return new Date(this.currentYear, this.currentMonthInNumber+1, 0).getDate();
+        },
+        startDay() {
+            return new Date(this.currentYear, this.currentMonthInNumber, 1).getDay();
+        },
+    },
 
     template: `
         <div class="container">
             <h1>My Calendar</h1>
-            <h3> {{currentMonthName}} {{currentYear}}</h1>
+            <h3> {{currentMonthInName}} {{currentYear}}</h3>
 
             <section>
                 <div class="days">
@@ -514,16 +535,15 @@ Vue.component("calendar", {
             </section>
 
             <section>
-                <div class="dates">
-                    <p v-for="day in startDay()" :key="day"></p>
-                    <p v-for="date in daysInMonth(currentYear, currentMonthInNumber)" :key="date" ref="date" @click="getDate">{{date}}</p>
-                    <p :class="todayDate(date)" v-for="date in lastDateOfMonth" :key="date">{{ date }}</p>
+                <div class="date">
+                    <p v-for="day in startDay" :key="day"></p>
+                    <p :class="todayDate(date)" v-for="date in daysInMonth">{{ date }}</p>
                 </div>
             </section>
 
             <section class="button">
-                <button @click="prev">Prev</button>
-                <button @click="next">Next</button>
+                <button @click="prev" class="btn btn-primary">Prev</button>
+                <button @click="next" class="btn btn-primary">Next</button>
             </section>
         </div>
     `
@@ -564,6 +584,6 @@ new Vue({
             let seconds = total % 60
 
             return `${minutes}:${seconds}`
-        }
+        },
     }
 })

@@ -18,10 +18,10 @@
 
     <div id="app">
         {% comment %} <div v-if="currentUser.id"></div> {% endcomment %}
-        <workout-timer :timer-active="workoutTimeActive" @done="toggleTimer" v-show="workoutTimeActive" :time-limit="workoutTimeLimit"></workout-timer>
+        {% comment %} <workout-timer :timer-active="workoutTimeActive" @done="toggleTimer" v-show="workoutTimeActive" :time-limit="workoutTimeLimit"></workout-timer>
         <rest-timer :timer-active="restTimeActive" @done="toggleTimer" v-show="restTimeActive" :time-limit="restTimeLimit"></rest-timer>
         <total-timer></total-timer>
-            
+
         <input v-model="prepareTimeLimit" placeholder="prepare">
         <input v-model="workoutTimeLimit" placeholder="workout">
         <input v-model="restTimeLimit" placeholder="rest">
@@ -99,10 +99,12 @@
             <div class="start">
                 <div class="startButton">
                     <button @click="startWorkoutTimer" class="timeStartButton">Start</button>
-                    {% comment %} <button class="pauseStartButton" style="display: none;">Pause</button> {% endcomment %}
+                    <button class="pauseStartButton" style="display: none;">Pause</button>
                 </div>
             </div>
-        </div> 
+        </div> {% endcomment %}
+        
+        <calendar></calendar>
     </div>
 
 

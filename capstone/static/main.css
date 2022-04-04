@@ -539,3 +539,37 @@ body {
 input:focus::placeholder {
   color: transparent;
 }
+
+
+/* .days p, .dates p {
+  width: 14.28%;
+
+}
+
+.dates{
+  flex-wrap: wrap;
+} */
+
+
+.days,
+.date {
+  text-align: center;
+  display: flex;
+}
+.date {
+  flex-wrap: wrap;
+}
+.days p,
+.date p {
+  width: 14.28%;
+}
+h1 {
+  text-align: center;
+}
+.button {
+  display: flex;
+  justify-content: space-between;
+}
+button {
+  cursor: pointer;
+}

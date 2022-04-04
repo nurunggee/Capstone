@@ -453,6 +453,81 @@ Vue.component("total-timer", {
     },
 
 })
+
+////////////////////////////////// Calendar //////////////////////////////////
+Vue.component("calendar", {
+    data: function() {
+        return {
+            days:["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+            currentMonthInNumber: new Date().getMonth(),
+            currentYear: new Date().getFullYear(),
+        }
+    },
+
+
+    // methods: {
+    //     prev(){
+    //         if(this.currentMonthInNumber === 0){
+    //             this.currentYear--
+    //             this.currentMonthInNumber=11
+    //         }else{
+    //             this.currentMonthInNumber--        
+    //         }
+    //     },
+    //     next(){
+    //         if(this.currentMonthInNumber === 11){
+    //             this.currentYear++
+    //             this.currentMonthInNumber=0
+    //         }else{
+    //             this.currentMonthInNumber++         
+    //         }
+    //     },
+    //     todayDate(date){
+    //         let calendarDate = new Date(this.currentYear, this.currentMonthInNumber, date).toDateString()
+    //         let toDay = new Date().toDateString()
+
+    //         return calendarDate=== toDay ? "bg-primary text-white" : ""
+    //     }
+    // },
+
+    // computed: {
+    //     currentMonthName(){
+    //         return new Date(this.currentYear, this.currentMonthInNumber).toLocaleString("default", {month:"long"})
+    //     },
+    //     lastDateOfMonth(){
+    //         return new Date(this.currentYear, this.currentMonthInNumber+1, 0).getDate()
+    //     },
+    //     firstDay(){
+    //         return new Date(this.currentYear, this.currentMonthInNumber, 1).getDay()
+    //     }
+    // },
+
+    template: `
+        <div class="container">
+            <h1>My Calendar</h1>
+            <h3> {{currentMonthName}} {{currentYear}}</h1>
+
+            <section>
+                <div class="days">
+                    <p v-for="(day, index) in days" :key="index">{{ day }}</p>
+                </div>
+            </section>
+
+            <section>
+                <div class="dates">
+                    <p v-for="day in startDay()" :key="day"></p>
+                    <p v-for="date in daysInMonth(currentYear, currentMonthInNumber)" :key="date" ref="date" @click="getDate">{{date}}</p>
+                    <p :class="todayDate(date)" v-for="date in lastDateOfMonth" :key="date">{{ date }}</p>
+                </div>
+            </section>
+
+            <section class="button">
+                <button @click="prev">Prev</button>
+                <button @click="next">Next</button>
+            </section>
+        </div>
+    `
+})
   
 
 new Vue({

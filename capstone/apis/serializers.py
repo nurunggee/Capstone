@@ -1,3 +1,4 @@
+from asyncore import read
 from rest_framework import serializers
 from ygt import models
 from users.models import CustomUser
@@ -37,18 +38,19 @@ class YgtSerializer(serializers.ModelSerializer):
         model = models.Ygt
 
 class ExerciseSerializer(serializers.ModelSerializer):
-    category_detail = NestedCategorySerializer(source='categories', many=True)
+    category_detail = NestedCategorySerializer(source='categories', many=True, read_only=True)
     class Meta: 
         fields = (
             'id',
             'name',
             'description',
             'category_detail',
+            'added_by',
         )
         model = Exercise
 
 class CategorySerializer(serializers.ModelSerializer):
-    exercise_detail = NestedExerciseSerializer(source='exercises', many=True)
+    exercise_detail = NestedExerciseSerializer(source='exercises', many=True, read_only=True)
     class Meta: 
         fields = (
             'id',
@@ -62,5 +64,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'username',
+            'added',
+
         )
         model = CustomUser

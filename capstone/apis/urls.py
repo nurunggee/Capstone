@@ -13,7 +13,7 @@ urlpatterns = router.urls + [
     path('currentuser/', CurrentUserView.as_view())
 ]
 
-# urlpatterns = router.urls
+# urlpatterns = 'exercise'
 
 # urlpatterns = [
 #     path('', ListYgt.as_view()),

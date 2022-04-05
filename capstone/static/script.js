@@ -19,3 +19,8 @@ document.addEventListener("click", e => {
     anchor.classList.add("active")
   }
 })
+
+let anchor = document.querySelector(".active")
+const allAnchors = [...document.querySelectorAll("a")]
+const index = allAnchors.indexOf(anchor)
+indicator.style.setProperty("--position", index)

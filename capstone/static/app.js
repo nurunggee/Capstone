@@ -1,14 +1,10 @@
 // TASKS:
 
-// 1. Number has a default value of something(if totalTime is NaN:NaN, it doesn't start)
-// 2. Prepare + (work out + rest) * cycles 
-// 3. When I click start, start button change to pause, when I click pause, the timer stops
-// 4. When the exercise starts, total time will be in "exercise" and the timer will be inside of the biggest box
-// 5. Add countdown sound on Workout and Rest timers
-// 6. Add logo under the cycle box
-// 7. When Nav is clicked, it goes to each page.
+// 1. calendar link to NAV
+// 2. calendar clicked change color
 
-// 8. Needs to working on Calendar too
+// optional. 00:00 style 
+
 
 ////////////////////////////////// PREPARE TIMER //////////////////////////////////
 Vue.component("prepare-timer", {
@@ -100,8 +96,11 @@ Vue.component("prepare-timer", {
 
     watch: {
         timeLeft(newValue) {
+            if(newValue === 3 && this.timerActive === true) {
+                let sound = new Audio("/static/img/countdown.mp3")
+                sound.play()
+            }
             if (newValue === 0) {
-                // I want the time reset and keep looping for right now//
                 this.onTimesUp();
             }
         },
@@ -117,7 +116,7 @@ Vue.component("prepare-timer", {
         onTimesUp() {
             this.timePassed = 0;
             clearInterval(this.timerInterval);
-            this.$emit("done", "workout")
+            this.$emit("done", "prep")
         },
 
         startTimer() {
@@ -206,28 +205,18 @@ Vue.component("workout-timer", {
 
         remainingPathColor() {
             const { info } = this.colorCodes;
-            let alert = 3;
-            let sound = new Audio("./countdown.mp3")
-            if (this.timeLeft <= alert){
-                sound.play()
-            }
             return info.color;
         },
-
-        alertSound(){
-            let alert = 3;
-            let sound = new Audio("countdown.mp3")
-            if (this.timeLeft <= alert){
-                sound.play()
-            }
-        }
     },
 
 
     watch: {
         timeLeft(newValue) {
+            if(newValue === 3 && this.timerActive === true) {
+                let sound = new Audio("/static/img/countdown.mp3")
+                sound.play()
+            }
             if (newValue === 0) {
-                // I want the time reset and keep looping for right now//
                 this.onTimesUp();
             }
         },
@@ -248,7 +237,19 @@ Vue.component("workout-timer", {
 
         startTimer() {
             this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
-        }
+        },
+
+        // onPause() {
+        //     this.timePassed = 0;
+        //     clearInterval(this.timerInterval);
+        //     this.$emit("done", "workout")
+        // },
+
+        // onStart() {
+        //     this.timePassed = 0;
+        //     clearInterval(this.timerInterval);
+        //     this.$emit("done", "workout")
+        // },
     },
 
 })
@@ -340,6 +341,10 @@ Vue.component("rest-timer", {
 
     watch: {
         timeLeft(newValue) {
+            if(newValue === 3 && this.timerActive === true) {
+                let sound = new Audio("/static/img/countdown.mp3")
+                sound.play()
+            }
             if (newValue === 0) {
                 this.onTimesUp();
             }
@@ -389,6 +394,9 @@ Vue.component("total-timer", {
         timerActive: {
             type: Boolean
         },
+        totalTimeLeft: {
+            type: Number,
+        }
     },
 
 
@@ -411,33 +419,9 @@ Vue.component("total-timer", {
         },
 
         timeLeft() {
-            return this.timeLimit - this.timePassed;
+            const total = parseFloat(this.prepareTimeLimit) + (parseFloat(this.workoutTimeLimit) + parseFloat(this.restTimeLimit)) * parseFloat(this.cycleTimeLimit)
+            return total - this.timePassed;
         },
-
-        circleDasharray() {
-            const FULL_DASH_ARRAY = 283;
-            return `${(this.timeFraction * FULL_DASH_ARRAY).toFixed(0)} 283`;
-        },
-
-        timeFraction() {  
-            const rawTimeFraction = this.timeLeft / this.timeLimit
-      
-            return rawTimeFraction - (1 / this.timeLimit) * (1 - rawTimeFraction);
-        },
-
-        colorCodes() {
-            return {
-                info: {
-                    color: "green"
-                }
-            }
-        },
-
-        remainingPathColor() {
-            const { info } = this.colorCodes;
-            return info.color;
-        },
-
     },
 
 
@@ -452,11 +436,6 @@ Vue.component("total-timer", {
                 this.startTimer()
             }
         }
-    },
-
-
-    mounted() {
-        // this.startTimer();
     },
 
     
@@ -481,9 +460,10 @@ Vue.component("calendar", {
             days:["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
             currentMonthInNumber: new Date().getMonth(),
             currentYear: new Date().getFullYear(),
+            clicked: [false ,false ,false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
         }
     },
-
+// todayDate(date)
     methods: {
         next() {
             if(this.currentMonthInNumber===11){
@@ -492,6 +472,7 @@ Vue.component("calendar", {
             }else{
                 this.currentMonthInNumber++
             }
+            this.clicked = [false ,false ,false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
         }, 
         
         prev() {
@@ -502,13 +483,14 @@ Vue.component("calendar", {
             else{
                 this.currentMonthInNumber--
             }
+            this.clicked = [false ,false ,false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
         },
 
         todayDate(date){
             let calenderDate = new Date(this.currentYear, this.currentMonthInNumber, date).toDateString()
             let toDay = new Date().toDateString()
             return calenderDate === toDay ? "text-primary" : ""
-        }
+        },
     },
     
     computed:{
@@ -520,7 +502,7 @@ Vue.component("calendar", {
         },
         startDay() {
             return new Date(this.currentYear, this.currentMonthInNumber, 1).getDay();
-        },
+        }
     },
 
     template: `
@@ -537,7 +519,7 @@ Vue.component("calendar", {
             <section>
                 <div class="date">
                     <p v-for="day in startDay" :key="day"></p>
-                    <p :class="todayDate(date)" v-for="date in daysInMonth">{{ date }}</p>
+                    <p v-for="(date, index) in daysInMonth" :class="{blue : clicked[index], white : !clicked[index]}" @click="clicked.splice(index, 1, !clicked[index])">{{ date }}</p>
                 </div>
             </section>
 
@@ -545,6 +527,103 @@ Vue.component("calendar", {
                 <button @click="prev" class="btn btn-primary">Prev</button>
                 <button @click="next" class="btn btn-primary">Next</button>
             </section>
+        </div>
+    `
+})
+
+Vue.component("exercise-list", {
+
+    data: function() {
+        return {
+            users: [],
+            currentUser: {
+                exercise_list: []
+            },
+            
+            newExercise: {
+                "name": "",
+            },
+            csrf_token: "",
+            name: "",
+            exercise: "",
+            results: {},
+            exercise_list: [],
+        }
+    },
+
+    methods: {
+        loadExercise: function() {
+            axios({
+                method: "get",
+                url: '/apis/v1/exercises/'
+            }).then(response => this.exercise_list = response.data)
+        },
+        createExercise: function() {
+            axios({
+                method: "post",
+                url: "/apis/v1/exercises/",
+                headers: {
+                    "X-CSRFToken": this.csrf_token
+                },
+                data: {
+                    "name": this.newExercise.name,
+                }
+            }).then(response => {
+                this.loadExercise()
+                this.newExercise = {
+                    "name": ""
+                }
+            })
+        },
+        deleteExercise(exercise) {
+            axios.delete("http://localhost:8000/apis/v1/exercises/" + exercise.id + "/", 
+            {headers: {"X-CSRFToken": this.csrf_token}
+            }).then(response => this.loadExercise());
+        },
+
+        loadCurrentUser: function() {
+            axios({
+                method: "get",
+                url: "/apis/v1/currentuser/"
+            }).then(response => this.currentUser = response.data)
+        },
+    },
+    
+    created: function() {
+        this.loadExercise()
+        this.loadCurrentUser()
+    },
+
+    mounted: function() {
+        this.csrf_token = document.querySelector("input[name=csrfmiddlewaretoken]").value
+    },
+
+    template: `
+        <div class="ex">
+            <header>
+                <h1>List of Exercises: </h1>
+                <div id ="new-exercise-form">
+                    <input type="text" id="new-exercise-input" v-model="newExercise.name" placeholder="New Exercise?"><br>
+                    <button @click="createExercise" id="new-exercise-submit">Submit</button>
+                </div>
+            </header>
+
+            <div class="main">
+                <section class="exercise-list">
+                    <h2>Exercises</h2>
+                    <div id="exercises">
+                        <ul class="exercise-inside">
+                            <li v-for= "exercise in exercise_list" :key="exercise.id" class="content">
+                                <p class="text"> {{ exercise.name }} </p>
+                                <button @click="deleteExercise(exercise)" class="delete">Delete</button>
+                            </li>
+                        </ul>
+                    </div>
+                </section>        
+            </div>
+
+
+
         </div>
     `
 })
@@ -556,24 +635,43 @@ new Vue({
     data: {
         restTimeActive: false,
         workoutTimeActive: false,
+        prepareTimeActive: false,
         prepareTimeLimit: "",
         workoutTimeLimit: "", 
         restTimeLimit: "",
         cycleTimeLimit: "",
-        // another one for track like a counter
+        cyclesLeft: 0,
+        totalTimeActive: false,
+        totalTimeLimit: "",
+
     },
     methods: {
         toggleTimer: function(doneTimer) {
-            if(doneTimer === "workout"){
+            if(this.cyclesLeft < 0) {
+                this.restTimeActive = false
+                this.workoutTimeActive = false
+                alert("timer's done")
+            }
+            else if(doneTimer === "workout"){
                 this.restTimeActive = true
                 this.workoutTimeActive = false
+                this.cyclesLeft--
             } else if(doneTimer === "rest"){
                 this.restTimeActive = false
                 this.workoutTimeActive = true
+                this.cyclesLeft--
+            } else if(doneTimer === "prep"){
+                this.prepareTimeActive = false
+                this.workoutTimeActive = true
+                this.restTimeActive = false
             }
         },
         startWorkoutTimer: function() {
-            this.workoutTimeActive = true
+            if(this.totalTime !== "NaN:NaN"){
+                this.cyclesLeft = parseFloat(this.cycleTimeLimit) * 2
+                this.prepareTimeActive = true
+                this.totalTimeActive = true
+            }
         },
 
     },

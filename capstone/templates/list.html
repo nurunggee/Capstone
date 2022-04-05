@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Home{% endblock %}
+{% block title %}List{% endblock %}
 
 {% block content %}
     <nav class="navbar-container">
@@ -9,7 +9,7 @@
                 <div class="corners">
                 </div>
             </div>
-            <li><a href="{% url 'home' %}" class="active">
+            <li><a href="{% url 'home' %}">
                 <div class="icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/></svg>
                 </div>
@@ -27,7 +27,7 @@
                 </div>
                 <div class="text">Calendar</div> 
             </a></li>
-            <li><a href="/list">
+            <li><a href="/list" class="active">
                 <div class="icon">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><g fill="none"><path d="M0 0h24v24H0V0z"/><path d="M0 0h24v24H0V0z" opacity=".87"/></g><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7zm-4 6h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
                 </div>
@@ -42,89 +42,12 @@
         </ul>
     </nav>
 
-    {% csrf_token %}
-    <div id="app">
-        
-        {% comment %} <div v-if="currentUser.id"></div>  {% endcomment %}
-
-        <prepare-timer :timer-active="prepareTimeActive" @done="toggleTimer" v-show="prepareTimeActive" :time-limit="prepareTimeLimit"></prepare-timer>
-        <workout-timer :timer-active="workoutTimeActive" @done="toggleTimer" v-show="workoutTimeActive" :time-limit="workoutTimeLimit"></workout-timer>
-        <rest-timer :timer-active="restTimeActive" @done="toggleTimer" v-show="restTimeActive" :time-limit="restTimeLimit"></rest-timer>
-        
-        <total-timer :timer-active="totalTimeActive" @done="toggleTimer" v-show="totalTimeActive" :time-limit="totalTimeLimit"></total-timer>
-            
-
-        <div class="background">
-            <div class="title">
-                <h2>Workout Timer</h2>
-            </div>
-            <div class="rightSide">
-                <div class="workout">
-                    <prepare-timer :timer-active="prepareTimeActive" @done="toggleTimer" v-show="prepareTimeActive" :time-limit="prepareTimeLimit"></prepare-timer>
-                    <workout-timer :timer-active="workoutTimeActive" @done="toggleTimer" v-show="workoutTimeActive" :time-limit="workoutTimeLimit"></workout-timer>
-                    <rest-timer :timer-active="restTimeActive" @done="toggleTimer" v-show="restTimeActive" :time-limit="restTimeLimit"></rest-timer>
-                </div>
-            </div>
-            <div class="leftSide">
-                <div class="cycles">
-                    <span class="value">
-                        <input v-model="cycleTimeLimit" id="cycleValue" placeholder="0">
-                    </span>
-                    <span class="label">
-                        Cycles
-                    </span>
-                </div>
-                <div class="exercise">
-                    <span class="label">Total Time</span>
-                    <span class="value"> [[ totalTime ]]</span>
-                    <span class="value"> <total-timer></total-timer></span>
-                </div>
-            </div>
-            <div class="bottom">
-                <div class="bottom1">
-                    <div class="prepare">
-                        <span class="value">
-                            <input v-model="prepareTimeLimit" id="prepareValue" placeholder="00:00">
-                        </span>
-                        <span class="label">
-                            Prepare
-                        </span>
-                    </div>
-                </div>
-                <div class="bottom2">
-                    <div class="work">
-                        <span class="value">
-                            <input v-model="workoutTimeLimit" id="workValue" placeholder="00:00">
-                        </span>
-                        <span class="label">
-                            Work Out
-                        </span>
-                    </div>
-                </div>
-                <div class="bottom3">
-                    <div class="rest">
-                        <span class="value">
-                            <input v-model="restTimeLimit" id="restValue" placeholder="00:00">
-                        </span>
-                        <span class="label">
-                            Rest
-                        </span>
-                    </div>
-                </div>
-                
-            </div>
-            <div class="start">
-                <div class="startButton">
-                    <button @click="startWorkoutTimer" class="timeStartButton">Start</button>
-                </div>
-            </div>
+    {% if user.is_authenticated %}
+        {% csrf_token %}
+        <div id="app">       
+            <exercise-list/>
         </div>
-        
-        {% comment %} <calendar/> {% endcomment %}
-
-    </div>
-
-
+    {% endif %}
 
 
 

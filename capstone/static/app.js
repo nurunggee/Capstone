@@ -1,7 +1,6 @@
 // TASKS:
 
-// 1. calendar link to NAV
-// 2. calendar clicked change color
+// 1. Total-time needs to be 00:00 format
 
 // optional. 00:00 style 
 
@@ -16,42 +15,40 @@ Vue.component("prepare-timer", {
     },
 
 
-    props: {
-        timeLimit: {
-            type: Number,
-            default: 5
-        },
-        timerActive: {
-            type: Boolean
-        },
-        totalTimeLeft: {
-            type: Number,
-            default: 3
-        }
-    },
+    props: [
+        'timeLimit',
+        'timerActive',
+    ],
 
 
     template: `
-        <div class="base-timer">
-            <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <g class="base-timer__circle">
-                    <circle class="base-timer__path-elapsed" cx="50" cy="50" r="46.5"/>
-                    <path
-                        :stroke-dasharray="circleDasharray"
-                        :class="remainingPathColor"
-                        class="base-timer__path-remaining" 
-                        d="
-                            M 50, 50 
-                            m -45, 0 
-                            a 45,45 0 0,1 90,0 
-                            a 45,45 0 0,1 -90,0
-                    "></path>
-                </g>
-            </svg>
-            <span class="base-timer__label">
-                {{ totalTimeLeft }}
-            </span>
+        <div class="timers">
+            <div class="base-timer">
+                <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <g class="base-timer__circle">
+                        <circle class="base-timer__path-elapsed" cx="50" cy="50" r="46.5"/>
+                        <path
+                            :stroke-dasharray="circleDasharray"
+                            :class="remainingPathColor"
+                            class="base-timer__path-remaining" 
+                            d="
+                                M 50, 50 
+                                m -45, 0 
+                                a 45,45 0 0,1 90,0 
+                                a 45,45 0 0,1 -90,0
+                        "></path>
+                    </g>
+                </svg>
+                <span class="base-timer__label">
+                    {{ totalTimeLeft }}
+                </span>
+            </div>
+            <div class="exercise_name">
+                <p class="current_exercise">PUSH UP</p>
+                <p class="next_exercise">NEXT   CRUNCH</p> 
+            </div>
         </div>
+
     `,
 
 
@@ -137,37 +134,38 @@ Vue.component("workout-timer", {
     },
 
 
-    props: {
-        timeLimit: {
-            type: Number,
-            default: 5
-        },
-        timerActive: {
-            type: Boolean
-        },
-    },
+    props: [
+        'timeLimit',
+        'timerActive'
+    ],
 
 
     template: `
-        <div class="base-timer">
-            <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <g class="base-timer__circle">
-                    <circle class="base-timer__path-elapsed" cx="50" cy="50" r="46.5"/>
-                    <path
-                        :stroke-dasharray="circleDasharray"
-                        :class="remainingPathColor"
-                        class="base-timer__path-remaining" 
-                        d="
-                            M 50, 50 
-                            m -45, 0 
-                            a 45,45 0 0,1 90,0 
-                            a 45,45 0 0,1 -90,0
-                    "></path>
-                </g>
-            </svg>
-            <span class="base-timer__label">
-                {{ totalTimeLeft }}
-            </span>
+        <div class="timers">
+            <div class="base-timer">
+                <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <g class="base-timer__circle">
+                        <circle class="base-timer__path-elapsed" cx="50" cy="50" r="46.5"/>
+                        <path
+                            :stroke-dasharray="circleDasharray"
+                            :class="remainingPathColor"
+                            class="base-timer__path-remaining" 
+                            d="
+                                M 50, 50 
+                                m -45, 0 
+                                a 45,45 0 0,1 90,0 
+                                a 45,45 0 0,1 -90,0
+                        "></path>
+                    </g>
+                </svg>
+                <span class="base-timer__label">
+                    {{ totalTimeLeft }}
+                </span>
+            </div>
+            <div class="exercise_name">
+                <p class="current_exercise">PUSH UP</p>
+                <p class="next_exercise">NEXT   CRUNCH</p> 
+            </div>
         </div>
     `,
 
@@ -265,37 +263,38 @@ Vue.component("rest-timer", {
     },
 
 
-    props: {
-        timeLimit: {
-            type: Number,
-            default: 3
-        },
-        timerActive: {
-            type: Boolean
-        },
-    },
+    props: [
+        'timeLimit',
+        'timerActive'
+    ],
 
 
     template: `
-        <div class="base-timer">
-            <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <g class="base-timer__circle">
-                    <circle class="base-timer__path-elapsed" cx="50" cy="50" r="46.5"/>
-                    <path
-                        :stroke-dasharray="circleDasharray"
-                        :class="remainingPathColor"
-                        class="base-timer__path-remaining" 
-                        d="
-                            M 50, 50 
-                            m -45, 0 
-                            a 45,45 0 0,1 90,0 
-                            a 45,45 0 0,1 -90,0
-                    "></path>
-                </g>
-            </svg>
-            <span class="base-timer__label">
-                {{ totalTimeLeft }}
-            </span>
+        <div class="timers">
+            <div class="base-timer">
+                <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <g class="base-timer__circle">
+                        <circle class="base-timer__path-elapsed" cx="50" cy="50" r="46.5"/>
+                        <path
+                            :stroke-dasharray="circleDasharray"
+                            :class="remainingPathColor"
+                            class="base-timer__path-remaining" 
+                            d="
+                                M 50, 50 
+                                m -45, 0 
+                                a 45,45 0 0,1 90,0 
+                                a 45,45 0 0,1 -90,0
+                        "></path>
+                    </g>
+                </svg>
+                <span class="base-timer__label">
+                    {{ totalTimeLeft }}
+                </span>
+            </div>
+            <div class="exercise_name">
+                <p class="current_exercise">PUSH UP</p>
+                <p class="next_exercise">NEXT   CRUNCH</p> 
+            </div>
         </div>
     `,
 
@@ -384,20 +383,16 @@ Vue.component("total-timer", {
         timerInterval: null
       }
     },
+    
+    props: [
+        'timeLimit',
+        'timerActive',
+        'prepareTimeLimit',
+        'workoutTimeLimit',
+        'restTimeLimit',
+        'cycleTimeLimit',
+    ],
 
-
-    props: {
-        timeLimit: {
-            type: Number,
-            default: 3
-        },
-        timerActive: {
-            type: Boolean
-        },
-        totalTimeLeft: {
-            type: Number,
-        }
-    },
 
 
     template: `
@@ -410,17 +405,19 @@ Vue.component("total-timer", {
 
 
     computed: {
+        timeLeft() {
+            const total = parseFloat(this.prepareTimeLimit) + (parseFloat(this.workoutTimeLimit) + parseFloat(this.restTimeLimit)) * parseFloat(this.cycleTimeLimit)
+            return total - this.timePassed;
+        },
+
         totalTimeLeft() {
             const timeLeft = this.timeLeft
             const minutes = Math.floor(timeLeft / 60);
             let seconds = timeLeft % 60
-
+            if(seconds < 10){
+                seconds = `0${seconds}`
+            }
             return `${minutes}:${seconds}`
-        },
-
-        timeLeft() {
-            const total = parseFloat(this.prepareTimeLimit) + (parseFloat(this.workoutTimeLimit) + parseFloat(this.restTimeLimit)) * parseFloat(this.cycleTimeLimit)
-            return total - this.timePassed;
         },
     },
 
@@ -489,7 +486,7 @@ Vue.component("calendar", {
         todayDate(date){
             let calenderDate = new Date(this.currentYear, this.currentMonthInNumber, date).toDateString()
             let toDay = new Date().toDateString()
-            return calenderDate === toDay ? "text-primary" : ""
+            return calenderDate === toDay
         },
     },
     
@@ -519,7 +516,7 @@ Vue.component("calendar", {
             <section>
                 <div class="date">
                     <p v-for="day in startDay" :key="day"></p>
-                    <p v-for="(date, index) in daysInMonth" :class="{blue : clicked[index], white : !clicked[index]}" @click="clicked.splice(index, 1, !clicked[index])">{{ date }}</p>
+                    <p v-for="(date, index) in daysInMonth" :class="{blue2 : todayDate(date), blue : clicked[index], white : !clicked[index]}" @click="clicked.splice(index, 1, !clicked[index])">{{ date }}</p>
                 </div>
             </section>
 
@@ -539,7 +536,6 @@ Vue.component("exercise-list", {
             currentUser: {
                 exercise_list: []
             },
-            
             newExercise: {
                 "name": "",
             },
@@ -548,32 +544,86 @@ Vue.component("exercise-list", {
             exercise: "",
             results: {},
             exercise_list: [],
+            random_list: [],
         }
     },
+    computed: {
+        listedExercise: function() {
+            return this.exercise_list.filter(exercise => {
+                return this.currentUser.added.includes(exercise.id)
+            })
+        }
+    },
+    props: [
+        "cycleTimeLimit"
+    ],
 
     methods: {
+        listExercise: function() {
+            for(let exercise of this.currentUser.added_info){
+                exercise_list.push(exercise.name)
+            }
+        },
+        randomExercise: function() {
+            for(let i = 0; i < parseFloat(this.cycleTimeLimit); i++){
+                this.random_list.push(Math.floor(Math.random(exercise_list)))
+            }
+        },
+
         loadExercise: function() {
             axios({
                 method: "get",
                 url: '/apis/v1/exercises/'
             }).then(response => this.exercise_list = response.data)
         },
-        createExercise: function() {
-            axios({
-                method: "post",
-                url: "/apis/v1/exercises/",
-                headers: {
-                    "X-CSRFToken": this.csrf_token
-                },
+        
+        listExercise: function(exercise) {
+            if(this.currentUser.added.includes(exercise.id)) {
+                this.currentUser.added.splice(this.currentUser.added.indexOf(exercise.id), 1)
+            } else {
+                this.currentUser.added.push(exercise.id)
+            }
+            axios ({
+                method: 'patch',
+                url: 'apis/v1/currentuser/',
                 data: {
-                    "name": this.newExercise.name,
-                }
+                    'added': this.currentUser.added
+                },
+                headers: {"X-CSRFToken": this.csrf_token},  
             }).then(response => {
+                this.loadCurrentUser()
                 this.loadExercise()
-                this.newExercise = {
-                    "name": ""
-                }
             })
+        },
+        createExercise: function() {
+            let duplicate = false
+            for(let exercise of this.currentUser.added_info){
+                if(exercise.name === this.newExercise.name) {
+                    duplicate = true
+                    alert("it's already in the list")
+                    break
+                }
+            }
+            if (!duplicate) {
+                axios({
+                    method: "post",
+                    url: "/apis/v1/exercises/",
+                    headers: {
+                        "X-CSRFToken": this.csrf_token
+                    },
+                    data: {
+                        "name": this.newExercise.name,
+                        "added_by": [this.currentUser.id]
+                    }
+                }).then(response => {
+                    this.loadCurrentUser()
+                    this.loadExercise()
+                    this.newExercise = {
+                        "name": ""
+                    }
+                })
+            }
+
         },
         deleteExercise(exercise) {
             axios.delete("http://localhost:8000/apis/v1/exercises/" + exercise.id + "/", 
@@ -603,7 +653,7 @@ Vue.component("exercise-list", {
             <header>
                 <h1>List of Exercises: </h1>
                 <div id ="new-exercise-form">
-                    <input type="text" id="new-exercise-input" v-model="newExercise.name" placeholder="New Exercise?"><br>
+                    <input @keyup.enter="createExercise" type="text" id="new-exercise-input" v-model="newExercise.name" placeholder="New Exercise?"><br>
                     <button @click="createExercise" id="new-exercise-submit">Submit</button>
                 </div>
             </header>
@@ -613,17 +663,14 @@ Vue.component("exercise-list", {
                     <h2>Exercises</h2>
                     <div id="exercises">
                         <ul class="exercise-inside">
-                            <li v-for= "exercise in exercise_list" :key="exercise.id" class="content">
-                                <p class="text"> {{ exercise.name }} </p>
+                            <li v-for= "exercise in listedExercise" :key="exercise.id" class="content">
+                                <p class="text" style="text-transform: uppercase"> {{ exercise.name }} </p>
                                 <button @click="deleteExercise(exercise)" class="delete">Delete</button>
                             </li>
                         </ul>
                     </div>
                 </section>        
             </div>
-
-
-
         </div>
     `
 })
@@ -636,13 +683,13 @@ new Vue({
         restTimeActive: false,
         workoutTimeActive: false,
         prepareTimeActive: false,
-        prepareTimeLimit: "",
-        workoutTimeLimit: "", 
-        restTimeLimit: "",
-        cycleTimeLimit: "",
+        prepareTimeLimit: null,
+        workoutTimeLimit: null, 
+        restTimeLimit: null,
+        cycleTimeLimit: null,
         cyclesLeft: 0,
         totalTimeActive: false,
-        totalTimeLimit: "",
+        totalTimeLimit: null,
 
     },
     methods: {

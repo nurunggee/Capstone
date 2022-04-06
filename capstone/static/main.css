@@ -150,9 +150,27 @@ body {
   border-right: none;
 }
 
+.exercise_name {
+  margin-top: 70px;
+  margin-left: 90px;
+}
 
+.current_exercise{
+  font-weight: bold;
+  font-size: 60px;
+}
 
+.next_exercise{
+  font-weight: bold;
+  font-size: 30px;
+}
 
+.timers{
+  padding-top: 50px;
+  padding-left: 50px;
+  display: flex;
+  flex-direction: row;
+}
 
 .base-timer {
   position: relative;
@@ -207,7 +225,7 @@ body {
   transform: scaleX(-1);
 }
 
-.total-timer__label {
+/* .total-timer__label {
   position: absolute;       
   width: 300px;
   height: 300px; 
@@ -216,6 +234,11 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 100px;
+} */
+
+.total-timer__label {
+  font-size: 55px;
+  padding-right: 50px;
 }
 
 .background {
@@ -723,4 +746,8 @@ header h1{
 .exercise-inside {
   overflow: auto;
   height: 600px;
+}
+
+.blue2 {
+  color: var(--blue);
 }

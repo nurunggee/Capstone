@@ -60,11 +60,12 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
 
 class UserSerializer(serializers.ModelSerializer):
+    added_info = NestedExerciseSerializer(source='added', many=True, read_only=True)
     class Meta :
         fields = (
             'id',
             'username',
             'added',
-
+            'added_info'
         )
         model = CustomUser

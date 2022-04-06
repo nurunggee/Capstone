@@ -45,10 +45,11 @@
     {% if user.is_authenticated %}
         {% csrf_token %}
         <div id="app">       
-            <exercise-list/>
+            <exercise-list
+                :cycle-time-limit="cycleTimeLimit">
+            </exercise-list>
         </div>
     {% endif %}
-
 
 
 

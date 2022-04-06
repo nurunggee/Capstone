@@ -47,11 +47,11 @@
         
         {% comment %} <div v-if="currentUser.id"></div>  {% endcomment %}
 
-        <prepare-timer :timer-active="prepareTimeActive" @done="toggleTimer" v-show="prepareTimeActive" :time-limit="prepareTimeLimit"></prepare-timer>
+        {% comment %} <prepare-timer :timer-active="prepareTimeActive" @done="toggleTimer" v-show="prepareTimeActive" :time-limit="prepareTimeLimit"></prepare-timer>
         <workout-timer :timer-active="workoutTimeActive" @done="toggleTimer" v-show="workoutTimeActive" :time-limit="workoutTimeLimit"></workout-timer>
-        <rest-timer :timer-active="restTimeActive" @done="toggleTimer" v-show="restTimeActive" :time-limit="restTimeLimit"></rest-timer>
+        <rest-timer :timer-active="restTimeActive" @done="toggleTimer" v-show="restTimeActive" :time-limit="restTimeLimit"></rest-timer> {% endcomment %}
         
-        <total-timer :timer-active="totalTimeActive" @done="toggleTimer" v-show="totalTimeActive" :time-limit="totalTimeLimit"></total-timer>
+        
             
 
         <div class="background">
@@ -76,8 +76,19 @@
                 </div>
                 <div class="exercise">
                     <span class="label">Total Time</span>
-                    <span class="value"> [[ totalTime ]]</span>
-                    <span class="value"> <total-timer></total-timer></span>
+                    <span class="value" v-if="!prepareTimeActive"> [[ totalTime ]]</span>
+                    <span class="value" v-else> 
+                        <total-timer 
+                            :cycle-time-limit="cycleTimeLimit"
+                            :workout-time-limit="workoutTimeLimit" 
+                            :prepare-time-limit="prepareTimeLimit" 
+                            :rest-time-limit="restTimeLimit"
+                            :timer-active="totalTimeActive" 
+                            @done="toggleTimer" 
+                            v-show="totalTimeActive" 
+                            :time-limit="totalTimeLimit">
+                        </total-timer>
+                    </span>
                 </div>
             </div>
             <div class="bottom">

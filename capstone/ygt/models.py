@@ -24,3 +24,11 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Day(models.Model):
+    day = models.DateField()
+    user = models.ManyToManyField(get_user_model(), related_name="days", blank=True)
+
+    def __str__(self):
+        return self.name

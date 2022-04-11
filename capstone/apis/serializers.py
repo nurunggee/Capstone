@@ -66,6 +66,7 @@ class UserSerializer(serializers.ModelSerializer):
             'id',
             'username',
             'added',
-            'added_info'
+            'added_info',
+            'days'
         )
         model = CustomUser

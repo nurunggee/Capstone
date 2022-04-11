@@ -10,7 +10,12 @@ Vue.component("prepare-timer", {
     data: function() {
       return {
         timePassed: 0,
-        timerInterval: null
+        timerInterval: null,
+        // random_list: [],
+        // exercise_list: [],
+        // currentUser: {
+        //     exercise_list: []
+        // },
       }
     },
 
@@ -18,6 +23,8 @@ Vue.component("prepare-timer", {
     props: [
         'timeLimit',
         'timerActive',
+        'exerciseQueue'
+        // 'cycleTimeLimit',
     ],
 
 
@@ -44,8 +51,8 @@ Vue.component("prepare-timer", {
                 </span>
             </div>
             <div class="exercise_name">
-                <p class="current_exercise">PUSH UP</p>
-                <p class="next_exercise">NEXT   CRUNCH</p> 
+                <p class="current_exercise">Prepare</p>
+                <p class="next_exercise">NEXT   {{exerciseQueue[0].name}}</p> 
             </div>
         </div>
 
@@ -88,6 +95,12 @@ Vue.component("prepare-timer", {
             return info.color;
         },
 
+        // listedExercise: function() {
+        //     return this.exercise_list.filter(exercise => {
+        //         return this.currentUser.added.includes(exercise.id)
+        //     })
+        // }
+
     },
 
 
@@ -118,8 +131,33 @@ Vue.component("prepare-timer", {
 
         startTimer() {
             this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
-        }
+        },
+        
+        // randomExercise: function() {
+        //     for(let i = 0; i < parseFloat(this.cycleTimeLimit); i++){
+        //         this.random_list.push(Math.floor(Math.random(this.listedExercise)))
+        //     }
+        // },
+
+        // loadExercise: function() {
+        //     axios({
+        //         method: "get",
+        //         url: '/apis/v1/exercises/'
+        //     }).then(response => this.exercise_list = response.data)
+        // },
+    
+        // loadCurrentUser: function() {
+        //     axios({
+        //         method: "get",
+        //         url: "/apis/v1/currentuser/"
+        //     }).then(response => this.currentUser = response.data)
+        // },
     },
+    
+    // created: function() {
+    //     this.loadExercise()
+    //     this.loadCurrentUser()
+    // },
 
 })
 
@@ -129,14 +167,21 @@ Vue.component("workout-timer", {
     data: function() {
       return {
         timePassed: 0,
-        timerInterval: null
+        timerInterval: null,
+        // random_list: [],
+        // exercise_list: [],
+        // currentUser: {
+        //     exercise_list: []
+        // },
       }
     },
 
 
     props: [
         'timeLimit',
-        'timerActive'
+        'timerActive',
+        'exerciseQueue'
+        // 'cycleTimeLimit',
     ],
 
 
@@ -163,8 +208,7 @@ Vue.component("workout-timer", {
                 </span>
             </div>
             <div class="exercise_name">
-                <p class="current_exercise">PUSH UP</p>
-                <p class="next_exercise">NEXT   CRUNCH</p> 
+                <p class="current_exercise_exercise">{{exerciseQueue[0].name}}</p>
             </div>
         </div>
     `,
@@ -205,6 +249,12 @@ Vue.component("workout-timer", {
             const { info } = this.colorCodes;
             return info.color;
         },
+
+        // listedExercise: function() {
+        //     return this.exercise_list.filter(exercise => {
+        //         return this.currentUser.added.includes(exercise.id)
+        //     })
+        // }
     },
 
 
@@ -237,18 +287,31 @@ Vue.component("workout-timer", {
             this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
         },
 
-        // onPause() {
-        //     this.timePassed = 0;
-        //     clearInterval(this.timerInterval);
-        //     this.$emit("done", "workout")
+        // randomExercise: function() {
+        //     for(let i = 0; i < parseFloat(this.cycleTimeLimit); i++){
+        //         this.random_list.push(Math.floor(Math.random(this.listedExercise)))
+        //     }
         // },
 
-        // onStart() {
-        //     this.timePassed = 0;
-        //     clearInterval(this.timerInterval);
-        //     this.$emit("done", "workout")
+        // loadExercise: function() {
+        //     axios({
+        //         method: "get",
+        //         url: '/apis/v1/exercises/'
+        //     }).then(response => this.exercise_list = response.data)
+        // },
+    
+        // loadCurrentUser: function() {
+        //     axios({
+        //         method: "get",
+        //         url: "/apis/v1/currentuser/"
+        //     }).then(response => this.currentUser = response.data)
         // },
     },
+
+    // created: function() {
+    //     this.loadExercise()
+    //     this.loadCurrentUser()
+    // },
 
 })
 
@@ -258,14 +321,21 @@ Vue.component("rest-timer", {
     data: function() {
       return {
         timePassed: 0,
-        timerInterval: null
+        timerInterval: null,
+        // random_list: [],
+        // exercise_list: [],
+        // currentUser: {
+        //     exercise_list: []
+        // },
       }
     },
 
 
     props: [
         'timeLimit',
-        'timerActive'
+        'timerActive',
+        'exerciseQueue'
+        // 'cycleTimeLimit',
     ],
 
 
@@ -292,8 +362,8 @@ Vue.component("rest-timer", {
                 </span>
             </div>
             <div class="exercise_name">
-                <p class="current_exercise">PUSH UP</p>
-                <p class="next_exercise">NEXT   CRUNCH</p> 
+                <p class="current_exercise">REST</p>
+                <p class="next_exercise">NEXT   {{exerciseQueue[0].name}}</p> 
             </div>
         </div>
     `,
@@ -335,6 +405,11 @@ Vue.component("rest-timer", {
             return info.color;
         },
 
+        // listedExercise: function() {
+        //     return this.exercise_list.filter(exercise => {
+        //         return this.currentUser.added.includes(exercise.id)
+        //     })
+        // }
     },
 
 
@@ -354,12 +429,6 @@ Vue.component("rest-timer", {
             }
         }
     },
-
-
-    mounted() {
-        // this.startTimer();
-    },
-
     
     methods: {
         onTimesUp() {
@@ -370,8 +439,33 @@ Vue.component("rest-timer", {
 
         startTimer() {
             this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
-        }
+        },
+
+        // randomExercise: function() {
+        //     for(let i = 0; i < parseFloat(this.cycleTimeLimit); i++){
+        //         this.random_list.push(Math.floor(Math.random(this.listedExercise)))
+        //     }
+        // },
+
+        // loadExercise: function() {
+        //     axios({
+        //         method: "get",
+        //         url: '/apis/v1/exercises/'
+        //     }).then(response => this.exercise_list = response.data)
+        // },
+    
+        // loadCurrentUser: function() {
+        //     axios({
+        //         method: "get",
+        //         url: "/apis/v1/currentuser/"
+        //     }).then(response => this.currentUser = response.data)
+        // },
     },
+
+    // created: function() {
+    //     this.loadExercise()
+    //     this.loadCurrentUser()
+    // },
 
 })
 
@@ -396,9 +490,9 @@ Vue.component("total-timer", {
 
 
     template: `
-        <div class="base-timer">
+        <div class="base-timer-total">
             <span class="total-timer__label">
-                {{ totalTimeLeft }}
+                {{totalTimeLeft === "NaN:NaN" ? "00:00" : totalTimeLeft }}
             </span>
         </div>
     `,
@@ -458,9 +552,9 @@ Vue.component("calendar", {
             currentMonthInNumber: new Date().getMonth(),
             currentYear: new Date().getFullYear(),
             clicked: [false ,false ,false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+            
         }
     },
-// todayDate(date)
     methods: {
         next() {
             if(this.currentMonthInNumber===11){
@@ -488,6 +582,27 @@ Vue.component("calendar", {
             let toDay = new Date().toDateString()
             return calenderDate === toDay
         },
+
+        // `${this.currentMonthInNumber} / ${this.date}/ ${this.currentYear}`
+        dayClick(index) {
+            if(this.currentUser.days.includes()) {
+                this.clicked.splice(index, 1, !this.clicked[index])
+            } else {
+                this.clicked.push(index, 1, !this.clicked[index])
+            }
+            axios({
+                method: "post",
+                url: "/apis/v1/currentuser/",
+                headers: {
+                    "X-CSRFToken": this.csrf_token
+                },
+                data: {
+                    "days": this.currentUser.days
+                }
+            }).then(response => {
+                this.loadCurrentUser()
+            })
+        }
     },
     
     computed:{
@@ -516,7 +631,7 @@ Vue.component("calendar", {
             <section>
                 <div class="date">
                     <p v-for="day in startDay" :key="day"></p>
-                    <p v-for="(date, index) in daysInMonth" :class="{blue2 : todayDate(date), blue : clicked[index], white : !clicked[index]}" @click="clicked.splice(index, 1, !clicked[index])">{{ date }}</p>
+                    <p v-for="(date, index) in daysInMonth" :class="{blue2 : todayDate(date), blue : clicked[index], white : !clicked[index]}" @click="dayClick(index)">{{ date }}</p>
                 </div>
             </section>
 
@@ -528,6 +643,7 @@ Vue.component("calendar", {
     `
 })
 
+////////////////////////////////// Exercise List //////////////////////////////////
 Vue.component("exercise-list", {
 
     data: function() {
@@ -544,7 +660,6 @@ Vue.component("exercise-list", {
             exercise: "",
             results: {},
             exercise_list: [],
-            random_list: [],
         }
     },
     computed: {
@@ -554,19 +669,11 @@ Vue.component("exercise-list", {
             })
         }
     },
-    props: [
-        "cycleTimeLimit"
-    ],
 
     methods: {
         listExercise: function() {
             for(let exercise of this.currentUser.added_info){
                 exercise_list.push(exercise.name)
-            }
-        },
-        randomExercise: function() {
-            for(let i = 0; i < parseFloat(this.cycleTimeLimit); i++){
-                this.random_list.push(Math.floor(Math.random(exercise_list)))
             }
         },
 
@@ -575,6 +682,13 @@ Vue.component("exercise-list", {
                 method: "get",
                 url: '/apis/v1/exercises/'
             }).then(response => this.exercise_list = response.data)
+        },
+
+        loadCurrentUser: function() {
+            axios({
+                method: "get",
+                url: "/apis/v1/currentuser/"
+            }).then(response => this.currentUser = response.data)
         },
         
         listExercise: function(exercise) {
@@ -631,12 +745,7 @@ Vue.component("exercise-list", {
             }).then(response => this.loadExercise());
         },
 
-        loadCurrentUser: function() {
-            axios({
-                method: "get",
-                url: "/apis/v1/currentuser/"
-            }).then(response => this.currentUser = response.data)
-        },
+
     },
     
     created: function() {
@@ -653,6 +762,10 @@ Vue.component("exercise-list", {
             <header>
                 <h1>List of Exercises: </h1>
                 <div id ="new-exercise-form">
+                    <select id="term" name="term">
+                        <option value="users">Users</option>
+                        <option value="pokemon"selected>Pokemon</option>
+                    </select>
                     <input @keyup.enter="createExercise" type="text" id="new-exercise-input" v-model="newExercise.name" placeholder="New Exercise?"><br>
                     <button @click="createExercise" id="new-exercise-submit">Submit</button>
                 </div>
@@ -675,7 +788,7 @@ Vue.component("exercise-list", {
     `
 })
   
-
+////////////////////////////////// Root Component //////////////////////////////////
 new Vue({
     el: "#app",
     delimiters: ['[[', ']]'],
@@ -690,18 +803,28 @@ new Vue({
         cyclesLeft: 0,
         totalTimeActive: false,
         totalTimeLimit: null,
+        random_list: [],
+        exercise_list: [],
+        currentUser: {
+            exercise_list: []
+        },
 
     },
+
+    props: {
+
+    },
+
     methods: {
         toggleTimer: function(doneTimer) {
-            if(this.cyclesLeft < 0) {
+            if(this.cyclesLeft === 2) {
                 this.restTimeActive = false
                 this.workoutTimeActive = false
-                alert("timer's done")
-            }
-            else if(doneTimer === "workout"){
+                if(!alert("Timer's done!")){window.location.reload();}
+            } else if(doneTimer === "workout"){
                 this.restTimeActive = true
                 this.workoutTimeActive = false
+                this.random_list.shift()
                 this.cyclesLeft--
             } else if(doneTimer === "rest"){
                 this.restTimeActive = false
@@ -713,12 +836,55 @@ new Vue({
                 this.restTimeActive = false
             }
         },
+
         startWorkoutTimer: function() {
             if(this.totalTime !== "NaN:NaN"){
                 this.cyclesLeft = parseFloat(this.cycleTimeLimit) * 2
                 this.prepareTimeActive = true
                 this.totalTimeActive = true
+                this.random_list = this.listedExercise.slice()
+                this.random_list.sort(() => Math.random() - 0.5)
             }
+        },
+
+        pauseWorkoutTimer: function() {
+            if(this.prepareTimeActive === true) {
+                clearInterval(this.timerInterval)
+            } else if (this.workoutTimeActive === true){
+                clearInterval(this.timerInterval)
+            } else if (restTimeActive === true) {
+                clearInterval(this.timerInterval)
+            }
+        },
+
+        resumeWorkoutTimer: function() {
+            if(this.prepareTimeActive === false) {
+                this.prepareTimeActive = true
+                this.totalTimeActive = true
+                this.timerActive = true
+            } else if (this.workoutTimeActive === false) {
+                this.workoutTimeActive = true
+                this.totalTimeActive = true
+                this.timerActive = true
+            } else if (this.restTimeActive === false) {
+                this.restTimeActive = true
+                this.totalTimeActive = true
+                this.timerActive = true
+            }
+        },
+
+        loadExercise: function() {
+            axios({
+                method: "get",
+                url: '/apis/v1/exercises/'
+            }).then(response => this.exercise_list = response.data)
+        },
+    
+        loadCurrentUser: function() {
+            axios({
+                method: "get",
+                url: "/apis/v1/currentuser/"
+            }).then(response => this.currentUser = response.data)
         },
 
     },
@@ -730,5 +896,14 @@ new Vue({
 
             return `${minutes}:${seconds}`
         },
-    }
+        listedExercise: function() {
+            return this.exercise_list.filter(exercise => {
+                return this.currentUser.added.includes(exercise.id)
+            })
+        }
+    },
+    created: function() {
+        this.loadExercise()
+        this.loadCurrentUser()
+    },
 })

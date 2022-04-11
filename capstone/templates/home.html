@@ -60,15 +60,15 @@
             </div>
             <div class="rightSide">
                 <div class="workout">
-                    <prepare-timer :timer-active="prepareTimeActive" @done="toggleTimer" v-show="prepareTimeActive" :time-limit="prepareTimeLimit"></prepare-timer>
-                    <workout-timer :timer-active="workoutTimeActive" @done="toggleTimer" v-show="workoutTimeActive" :time-limit="workoutTimeLimit"></workout-timer>
-                    <rest-timer :timer-active="restTimeActive" @done="toggleTimer" v-show="restTimeActive" :time-limit="restTimeLimit"></rest-timer>
+                    <prepare-timer :timer-active="prepareTimeActive" @done="toggleTimer" v-show="prepareTimeActive" :exercise-queue='random_list' :time-limit="prepareTimeLimit" :cycle-time-limit="cycleTimeLimit"></prepare-timer>
+                    <workout-timer :timer-active="workoutTimeActive" @done="toggleTimer" v-show="workoutTimeActive" :exercise-queue='random_list' :time-limit="workoutTimeLimit" :cycle-time-limit="cycleTimeLimit"></workout-timer>
+                    <rest-timer :timer-active="restTimeActive" @done="toggleTimer" v-show="restTimeActive" :time-limit="restTimeLimit" :exercise-queue='random_list' :cycle-time-limit="cycleTimeLimit"></rest-timer>
                 </div>
             </div>
             <div class="leftSide">
                 <div class="cycles">
                     <span class="value">
-                        <input v-model="cycleTimeLimit" id="cycleValue" placeholder="0">
+                        <input v-model="cycleTimeLimit" id="cycleValue" placeholder="0" @keyup.enter="startWorkoutTimer">
                     </span>
                     <span class="label">
                         Cycles
@@ -76,8 +76,7 @@
                 </div>
                 <div class="exercise">
                     <span class="label">Total Time</span>
-                    <span class="value" v-if="!prepareTimeActive"> [[ totalTime ]]</span>
-                    <span class="value" v-else> 
+                    <span class="value"> 
                         <total-timer 
                             :cycle-time-limit="cycleTimeLimit"
                             :workout-time-limit="workoutTimeLimit" 
@@ -85,17 +84,17 @@
                             :rest-time-limit="restTimeLimit"
                             :timer-active="totalTimeActive" 
                             @done="toggleTimer" 
-                            v-show="totalTimeActive" 
                             :time-limit="totalTimeLimit">
                         </total-timer>
                     </span>
+                    {% comment %} <span class="value" v-else> [[ totalTime ]]</span> {% endcomment %}
                 </div>
             </div>
             <div class="bottom">
                 <div class="bottom1">
                     <div class="prepare">
                         <span class="value">
-                            <input v-model="prepareTimeLimit" id="prepareValue" placeholder="00:00">
+                            <input v-model="prepareTimeLimit" id="prepareValue" placeholder="00:00" @keyup.enter="startWorkoutTimer">
                         </span>
                         <span class="label">
                             Prepare
@@ -105,7 +104,7 @@
                 <div class="bottom2">
                     <div class="work">
                         <span class="value">
-                            <input v-model="workoutTimeLimit" id="workValue" placeholder="00:00">
+                            <input v-model="workoutTimeLimit" id="workValue" placeholder="00:00" @keyup.enter="startWorkoutTimer">
                         </span>
                         <span class="label">
                             Work Out
@@ -115,7 +114,7 @@
                 <div class="bottom3">
                     <div class="rest">
                         <span class="value">
-                            <input v-model="restTimeLimit" id="restValue" placeholder="00:00">
+                            <input v-model="restTimeLimit" id="restValue" placeholder="00:00" @keyup.enter="startWorkoutTimer">
                         </span>
                         <span class="label">
                             Rest
@@ -127,6 +126,8 @@
             <div class="start">
                 <div class="startButton">
                     <button @click="startWorkoutTimer" class="timeStartButton">Start</button>
+                    <button @click="pauseWorkoutTimer" class="timeStartButton">Pause</button>
+                    <button @click="resumeWorkoutTimer" class="timeStartButton">Resume</button>
                 </div>
             </div>
         </div>

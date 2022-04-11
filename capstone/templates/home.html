@@ -60,9 +60,36 @@
             </div>
             <div class="rightSide">
                 <div class="workout">
-                    <prepare-timer :timer-active="prepareTimeActive" @done="toggleTimer" v-show="prepareTimeActive" :exercise-queue='random_list' :time-limit="prepareTimeLimit" :cycle-time-limit="cycleTimeLimit"></prepare-timer>
-                    <workout-timer :timer-active="workoutTimeActive" @done="toggleTimer" v-show="workoutTimeActive" :exercise-queue='random_list' :time-limit="workoutTimeLimit" :cycle-time-limit="cycleTimeLimit"></workout-timer>
-                    <rest-timer :timer-active="restTimeActive" @done="toggleTimer" v-show="restTimeActive" :time-limit="restTimeLimit" :exercise-queue='random_list' :cycle-time-limit="cycleTimeLimit"></rest-timer>
+                    <prepare-timer
+                        :timer-resume="prepareTimeResume" 
+                        :timer-pause="prepareTimePause" 
+                        :timer-active="prepareTimeActive" 
+                        @done="toggleTimer" 
+                        v-show="prepareTimeActive" 
+                        :exercise-queue='random_list' 
+                        :time-limit="prepareTimeLimit" 
+                        :cycle-time-limit="cycleTimeLimit">
+                    </prepare-timer>
+                    <workout-timer
+                        :timer-resume="workoutTimeResume" 
+                        :timer-pause="workoutTimePause" 
+                        :timer-active="workoutTimeActive" 
+                        @done="toggleTimer" 
+                        v-show="workoutTimeActive" 
+                        :exercise-queue='random_list' 
+                        :time-limit="workoutTimeLimit" 
+                        :cycle-time-limit="cycleTimeLimit">
+                    </workout-timer>
+                    <rest-timer
+                        :timer-resume="restTimeResume" 
+                        :timer-pause="restTimePause" 
+                        :timer-active="restTimeActive" 
+                        @done="toggleTimer" 
+                        v-show="restTimeActive" 
+                        :time-limit="restTimeLimit" 
+                        :exercise-queue='random_list' 
+                        :cycle-time-limit="cycleTimeLimit">
+                    </rest-timer>
                 </div>
             </div>
             <div class="leftSide">

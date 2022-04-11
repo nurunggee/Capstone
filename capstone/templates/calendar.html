@@ -45,7 +45,7 @@
     {% if user.is_authenticated %}
         {% csrf_token %}
         <div id="app">       
-            <calendar/>
+            <calendar :current-user="currentUser"/>
         </div>
     {% endif %}
 

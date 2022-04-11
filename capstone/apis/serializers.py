@@ -2,7 +2,7 @@ from asyncore import read
 from rest_framework import serializers
 from ygt import models
 from users.models import CustomUser
-from ygt.models import Exercise, Category
+from ygt.models import Exercise, Category, Day, Ygt
 
 # class NestedUserSerializer(serializers.ModelSerializer):
 #     class Meta:
@@ -35,7 +35,7 @@ class YgtSerializer(serializers.ModelSerializer):
             'id',
             'title',
         )
-        model = models.Ygt
+        model = Ygt
 
 class ExerciseSerializer(serializers.ModelSerializer):
     category_detail = NestedCategorySerializer(source='categories', many=True, read_only=True)
@@ -70,3 +70,12 @@ class UserSerializer(serializers.ModelSerializer):
             'days'
         )
         model = CustomUser
+
+class DaySerializer(serializers.ModelSerializer):
+    class Meta :
+        fields = (
+            'id',
+            'day',
+            'user'
+        )
+        model = Day

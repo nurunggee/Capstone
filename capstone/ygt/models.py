@@ -31,4 +31,4 @@ class Day(models.Model):
     user = models.ManyToManyField(get_user_model(), related_name="days", blank=True)
 
     def __str__(self):
-        return self.name
+        return self.day

@@ -1,6 +1,6 @@
 from rest_framework import generics, viewsets, permissions, filters
-from ygt.models import Exercise, Category, Ygt, CustomUser
-from .serializers import YgtSerializer, ExerciseSerializer, CategorySerializer, UserSerializer
+from ygt.models import Exercise, Category, Ygt, CustomUser, Day
+from .serializers import YgtSerializer, ExerciseSerializer, CategorySerializer, UserSerializer, DaySerializer
 from users.models import CustomUser
 
 # class ListYgt(generics.ListCreateAPIView):
@@ -42,3 +42,9 @@ class CurrentUserView(generics.RetrieveUpdateAPIView):
     
     def get_object(self):
         return self.request.user
+
+class DayViewSet(viewsets.ModelViewSet):
+    queryset = Day.objects.all()
+    serializer_class = DaySerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['day']

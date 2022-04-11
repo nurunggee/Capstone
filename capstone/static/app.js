@@ -1,9 +1,5 @@
 // TASKS:
 
-// 1. Total-time needs to be 00:00 format
-
-// optional. 00:00 style 
-
 
 ////////////////////////////////// PREPARE TIMER //////////////////////////////////
 Vue.component("prepare-timer", {
@@ -11,11 +7,6 @@ Vue.component("prepare-timer", {
       return {
         timePassed: 0,
         timerInterval: null,
-        // random_list: [],
-        // exercise_list: [],
-        // currentUser: {
-        //     exercise_list: []
-        // },
       }
     },
 
@@ -23,8 +14,9 @@ Vue.component("prepare-timer", {
     props: [
         'timeLimit',
         'timerActive',
-        'exerciseQueue'
-        // 'cycleTimeLimit',
+        'exerciseQueue',
+        'timerPause',
+        // 'timerResume'
     ],
 
 
@@ -95,12 +87,6 @@ Vue.component("prepare-timer", {
             return info.color;
         },
 
-        // listedExercise: function() {
-        //     return this.exercise_list.filter(exercise => {
-        //         return this.currentUser.added.includes(exercise.id)
-        //     })
-        // }
-
     },
 
 
@@ -117,8 +103,15 @@ Vue.component("prepare-timer", {
         timerActive(active) {
             if (active){
                 this.startTimer()
+            }else{
+                this.startTimer()
             }
-        }
+        },
+        // timerPause(active) {
+        //     if(active){
+        //         this.pauseTimer()
+        //     }
+        // }
     },
 
     
@@ -132,32 +125,16 @@ Vue.component("prepare-timer", {
         startTimer() {
             this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
         },
-        
-        // randomExercise: function() {
-        //     for(let i = 0; i < parseFloat(this.cycleTimeLimit); i++){
-        //         this.random_list.push(Math.floor(Math.random(this.listedExercise)))
-        //     }
-        // },
 
-        // loadExercise: function() {
-        //     axios({
-        //         method: "get",
-        //         url: '/apis/v1/exercises/'
-        //     }).then(response => this.exercise_list = response.data)
-        // },
-    
-        // loadCurrentUser: function() {
-        //     axios({
-        //         method: "get",
-        //         url: "/apis/v1/currentuser/"
-        //     }).then(response => this.currentUser = response.data)
-        // },
+        pauseTimer() {
+            clearInterval(this.timerInterval)
+        },
+
+        // resumeTimer() {
+        //     this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
+        // }
+        
     },
-    
-    // created: function() {
-    //     this.loadExercise()
-    //     this.loadCurrentUser()
-    // },
 
 })
 
@@ -168,11 +145,6 @@ Vue.component("workout-timer", {
       return {
         timePassed: 0,
         timerInterval: null,
-        // random_list: [],
-        // exercise_list: [],
-        // currentUser: {
-        //     exercise_list: []
-        // },
       }
     },
 
@@ -180,8 +152,9 @@ Vue.component("workout-timer", {
     props: [
         'timeLimit',
         'timerActive',
-        'exerciseQueue'
-        // 'cycleTimeLimit',
+        'exerciseQueue',
+        'timerPause',
+        // 'timerResume'
     ],
 
 
@@ -250,11 +223,6 @@ Vue.component("workout-timer", {
             return info.color;
         },
 
-        // listedExercise: function() {
-        //     return this.exercise_list.filter(exercise => {
-        //         return this.currentUser.added.includes(exercise.id)
-        //     })
-        // }
     },
 
 
@@ -272,7 +240,22 @@ Vue.component("workout-timer", {
             if (active){
                 this.startTimer()
             }
-        }
+        },
+        timerPause(active) {
+            if(active){
+                this.pauseTimer()
+            }else{
+                this.startTimer()
+            }
+        },
+        // timerResume(active) {
+        //     if(active){
+        //         this.pauseTimer()
+        //     }else{
+        //         this.startTimer()
+        //     }
+        // }
+        
     },
 
     
@@ -287,31 +270,16 @@ Vue.component("workout-timer", {
             this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
         },
 
-        // randomExercise: function() {
-        //     for(let i = 0; i < parseFloat(this.cycleTimeLimit); i++){
-        //         this.random_list.push(Math.floor(Math.random(this.listedExercise)))
-        //     }
-        // },
+        pauseTimer() {
+            clearInterval(this.timerInterval)
+        },
 
-        // loadExercise: function() {
-        //     axios({
-        //         method: "get",
-        //         url: '/apis/v1/exercises/'
-        //     }).then(response => this.exercise_list = response.data)
-        // },
-    
-        // loadCurrentUser: function() {
-        //     axios({
-        //         method: "get",
-        //         url: "/apis/v1/currentuser/"
-        //     }).then(response => this.currentUser = response.data)
-        // },
+        // resumeTimer() {
+        //     this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
+        // }
+
     },
 
-    // created: function() {
-    //     this.loadExercise()
-    //     this.loadCurrentUser()
-    // },
 
 })
 
@@ -322,11 +290,6 @@ Vue.component("rest-timer", {
       return {
         timePassed: 0,
         timerInterval: null,
-        // random_list: [],
-        // exercise_list: [],
-        // currentUser: {
-        //     exercise_list: []
-        // },
       }
     },
 
@@ -334,8 +297,9 @@ Vue.component("rest-timer", {
     props: [
         'timeLimit',
         'timerActive',
-        'exerciseQueue'
-        // 'cycleTimeLimit',
+        'exerciseQueue',
+        'timerPause',
+        // 'timerResume'
     ],
 
 
@@ -405,11 +369,6 @@ Vue.component("rest-timer", {
             return info.color;
         },
 
-        // listedExercise: function() {
-        //     return this.exercise_list.filter(exercise => {
-        //         return this.currentUser.added.includes(exercise.id)
-        //     })
-        // }
     },
 
 
@@ -427,7 +386,19 @@ Vue.component("rest-timer", {
             if (active){
                 this.startTimer()
             }
-        }
+        },
+        timerPause(active) {
+            if(active){
+                this.pauseTimer()
+            } else {
+                this.startTimer()
+            }
+        },
+        // timerResume(active) {
+        //     if(active){
+        //         this.pauseTimer()
+        //     }
+        // }
     },
     
     methods: {
@@ -441,31 +412,15 @@ Vue.component("rest-timer", {
             this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
         },
 
-        // randomExercise: function() {
-        //     for(let i = 0; i < parseFloat(this.cycleTimeLimit); i++){
-        //         this.random_list.push(Math.floor(Math.random(this.listedExercise)))
-        //     }
-        // },
+        pauseTimer() {
+            clearInterval(this.timerInterval)
+        },
 
-        // loadExercise: function() {
-        //     axios({
-        //         method: "get",
-        //         url: '/apis/v1/exercises/'
-        //     }).then(response => this.exercise_list = response.data)
-        // },
-    
-        // loadCurrentUser: function() {
-        //     axios({
-        //         method: "get",
-        //         url: "/apis/v1/currentuser/"
-        //     }).then(response => this.currentUser = response.data)
-        // },
+        // resumeTimer() {
+        //     this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
+        // }
+
     },
-
-    // created: function() {
-    //     this.loadExercise()
-    //     this.loadCurrentUser()
-    // },
 
 })
 
@@ -485,6 +440,8 @@ Vue.component("total-timer", {
         'workoutTimeLimit',
         'restTimeLimit',
         'cycleTimeLimit',
+        'timerPause',
+        // 'timerResume'
     ],
 
 
@@ -526,7 +483,19 @@ Vue.component("total-timer", {
             if (active){
                 this.startTimer()
             }
-        }
+        },
+        timerPause(active) {
+            if(active){
+                this.pauseTimer()
+            }else{
+                this.startTimer()
+            }
+        },
+        // timerResume(active) {
+        //     if(active){
+        //         this.pauseTimer()
+        //     }
+        // }
     },
 
     
@@ -539,7 +508,15 @@ Vue.component("total-timer", {
 
         startTimer() {
             this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
-        }
+        },
+
+        pauseTimer() {
+            clearInterval(this.timerInterval)
+        },
+
+        // resumeTimer() {
+        //     this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
+        // }
     },
 
 })
@@ -552,8 +529,14 @@ Vue.component("calendar", {
             currentMonthInNumber: new Date().getMonth(),
             currentYear: new Date().getFullYear(),
             clicked: [false ,false ,false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-            
+            csrf_token: ""
         }
+    },
+    props:[
+        "currentUser"
+    ],
+    mounted: function() {
+        this.csrf_token = document.querySelector("input[name=csrfmiddlewaretoken]").value
     },
     methods: {
         next() {
@@ -583,21 +566,24 @@ Vue.component("calendar", {
             return calenderDate === toDay
         },
 
-        // `${this.currentMonthInNumber} / ${this.date}/ ${this.currentYear}`
+
         dayClick(index) {
-            if(this.currentUser.days.includes()) {
-                this.clicked.splice(index, 1, !this.clicked[index])
-            } else {
-                this.clicked.push(index, 1, !this.clicked[index])
+            if(this.currentMonthInNumber < 10){
+                this.currentMonthInNumber = `0${this.currentMonthInNumber}`
             }
+            let month = parseInt(this.currentMonthInNumber) + 1
+            let currentDate = `${this.currentYear}-${month}-${this.date}`
+
+            this.clicked.splice(index, 1, !this.clicked[index])
             axios({
                 method: "post",
-                url: "/apis/v1/currentuser/",
+                url: "/apis/v1/days/",
                 headers: {
                     "X-CSRFToken": this.csrf_token
                 },
                 data: {
-                    "days": this.currentUser.days
+                    "day": currentDate,
+                    "user": [this.currentUser.username]
                 }
             }).then(response => {
                 this.loadCurrentUser()
@@ -808,11 +794,14 @@ new Vue({
         currentUser: {
             exercise_list: []
         },
-
-    },
-
-    props: {
-
+        restTimePause: false,
+        workoutTimePause: false,
+        prepareTimePause: false,
+        totalTimePause: false,
+        // restTimeResume: false,
+        // workoutTimeResume: false,
+        // prepareTimeResume: false,
+        // totalTimeResume: false
     },
 
     methods: {
@@ -849,27 +838,21 @@ new Vue({
 
         pauseWorkoutTimer: function() {
             if(this.prepareTimeActive === true) {
-                clearInterval(this.timerInterval)
+                prepareTimePause = true
             } else if (this.workoutTimeActive === true){
-                clearInterval(this.timerInterval)
+                workoutTimePause = true
             } else if (restTimeActive === true) {
-                clearInterval(this.timerInterval)
+                restTimePause = true
             }
         },
 
         resumeWorkoutTimer: function() {
             if(this.prepareTimeActive === false) {
-                this.prepareTimeActive = true
-                this.totalTimeActive = true
-                this.timerActive = true
+                prepareTimePause = false
             } else if (this.workoutTimeActive === false) {
-                this.workoutTimeActive = true
-                this.totalTimeActive = true
-                this.timerActive = true
+                workoutTimePause = false
             } else if (this.restTimeActive === false) {
-                this.restTimeActive = true
-                this.totalTimeActive = true
-                this.timerActive = true
+                restTimePause = false
             }
         },
 

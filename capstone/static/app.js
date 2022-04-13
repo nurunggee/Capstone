@@ -567,12 +567,17 @@ Vue.component("calendar", {
         },
 
 
-        dayClick(index) {
+        dayClick(date, index) {
+            let currentMonth = ""
             if(this.currentMonthInNumber < 10){
-                this.currentMonthInNumber = `0${this.currentMonthInNumber}`
+                currentMonth = `0${this.currentMonthInNumber + 1}`
+            } else{
+                currentMonth = this.currentMonthInNumber + 1
             }
-            let month = parseInt(this.currentMonthInNumber) + 1
-            let currentDate = `${this.currentYear}-${month}-${this.date}`
+            if(date < 10){
+                date = `0${date}`
+            }
+            let currentDate = `${this.currentYear}-${currentMonth}-${date}`
 
             this.clicked.splice(index, 1, !this.clicked[index])
             axios({
@@ -583,7 +588,7 @@ Vue.component("calendar", {
                 },
                 data: {
                     "day": currentDate,
-                    "user": [this.currentUser.username]
+                    "user": [this.currentUser.id]
                 }
             }).then(response => {
                 this.loadCurrentUser()
@@ -617,7 +622,7 @@ Vue.component("calendar", {
             <section>
                 <div class="date">
                     <p v-for="day in startDay" :key="day"></p>
-                    <p v-for="(date, index) in daysInMonth" :class="{blue2 : todayDate(date), blue : clicked[index], white : !clicked[index]}" @click="dayClick(index)">{{ date }}</p>
+                    <p v-for="(date, index) in daysInMonth" :class="{blue2 : todayDate(date), blue : clicked[index], white : !clicked[index]}" @click="dayClick(date, index)">{{ date }}</p>
                 </div>
             </section>
 

@@ -574,9 +574,11 @@ Vue.component("calendar", {
             } else{
                 currentMonth = this.currentMonthInNumber + 1
             }
+
             if(date < 10){
                 date = `0${date}`
             }
+
             let currentDate = `${this.currentYear}-${currentMonth}-${date}`
 
             this.clicked.splice(index, 1, !this.clicked[index])
@@ -596,7 +598,6 @@ Vue.component("calendar", {
         }
     },
 
-    // good job
     
     computed:{
         currentMonthInName(){
@@ -624,7 +625,7 @@ Vue.component("calendar", {
             <section>
                 <div class="date">
                     <p v-for="day in startDay" :key="day"></p>
-                    <p v-for="(date, index) in daysInMonth" :class="{blue2 : todayDate(date), blue : clicked[index], white : !clicked[index]}" @click="dayClick(date, index)">{{ date }}</p>
+                    <p v-for="(date, index) in daysInMonth" :class="{blue2 : todayDate(date), blue : clicked[index], white : !clicked[index]}" @click="dayClick(date, index) ? clicked[index] : !clicked[index]">{{ date }}</p>
                 </div>
             </section>
 

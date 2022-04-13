@@ -595,6 +595,8 @@ Vue.component("calendar", {
             })
         }
     },
+
+    // good job
     
     computed:{
         currentMonthInName(){

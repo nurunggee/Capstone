@@ -1,6 +1,3 @@
-// TASKS:
-
-
 ////////////////////////////////// PREPARE TIMER //////////////////////////////////
 Vue.component("prepare-timer", {
     data: function() {
@@ -15,8 +12,6 @@ Vue.component("prepare-timer", {
         'timeLimit',
         'timerActive',
         'exerciseQueue',
-        'timerPause',
-        // 'timerResume'
     ],
 
 
@@ -89,51 +84,35 @@ Vue.component("prepare-timer", {
 
     },
 
+    methods: {
+
+        onTimesUp() {
+            this.timePassed = 0; //When times up, reset timePassed to 0
+            clearInterval(this.timerInterval);
+            this.$emit("done", "prep")
+        },
+
+        startTimer() {
+            this.timerInterval = setInterval(() => (this.timePassed += 1), 1000); //every second, timePassed will be increase by 1
+        },
+
+    },
 
     watch: {
+        timerActive(active) {
+            if (active){
+                this.startTimer()
+            }
+        },
         timeLeft(newValue) {
             if(newValue === 3 && this.timerActive === true) {
                 let sound = new Audio("/static/img/countdown.mp3")
                 sound.play()
             }
             if (newValue === 0) {
-                this.onTimesUp();
+                this.onTimesUp(); 
             }
         },
-        timerActive(active) {
-            if (active){
-                this.startTimer()
-            }else{
-                this.startTimer()
-            }
-        },
-        // timerPause(active) {
-        //     if(active){
-        //         this.pauseTimer()
-        //     }
-        // }
-    },
-
-    
-    methods: {
-        onTimesUp() {
-            this.timePassed = 0;
-            clearInterval(this.timerInterval);
-            this.$emit("done", "prep")
-        },
-
-        startTimer() {
-            this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
-        },
-
-        pauseTimer() {
-            clearInterval(this.timerInterval)
-        },
-
-        // resumeTimer() {
-        //     this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
-        // }
-        
     },
 
 })
@@ -153,8 +132,6 @@ Vue.component("workout-timer", {
         'timeLimit',
         'timerActive',
         'exerciseQueue',
-        'timerPause',
-        // 'timerResume'
     ],
 
 
@@ -241,43 +218,19 @@ Vue.component("workout-timer", {
                 this.startTimer()
             }
         },
-        timerPause(active) {
-            if(active){
-                this.pauseTimer()
-            }else{
-                this.startTimer()
-            }
-        },
-        // timerResume(active) {
-        //     if(active){
-        //         this.pauseTimer()
-        //     }else{
-        //         this.startTimer()
-        //     }
-        // }
-        
     },
 
     
     methods: {
         onTimesUp() {
-            this.timePassed = 0;
+            this.timePassed = 0; 
             clearInterval(this.timerInterval);
             this.$emit("done", "workout")
         },
 
         startTimer() {
-            this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
+            this.timerInterval = setInterval(() => (this.timePassed += 1), 1000); 
         },
-
-        pauseTimer() {
-            clearInterval(this.timerInterval)
-        },
-
-        // resumeTimer() {
-        //     this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
-        // }
-
     },
 
 
@@ -298,8 +251,6 @@ Vue.component("rest-timer", {
         'timeLimit',
         'timerActive',
         'exerciseQueue',
-        'timerPause',
-        // 'timerResume'
     ],
 
 
@@ -334,6 +285,10 @@ Vue.component("rest-timer", {
 
 
     computed: {
+        timeLeft() {
+            return this.timeLimit - this.timePassed;
+        },
+
         totalTimeLeft() {
             const timeLeft = this.timeLeft
             let seconds = timeLeft % 60
@@ -341,9 +296,6 @@ Vue.component("rest-timer", {
             return `${seconds}`
         },
 
-        timeLeft() {
-            return this.timeLimit - this.timePassed;
-        },
 
         circleDasharray() {
             const FULL_DASH_ARRAY = 283;
@@ -387,18 +339,6 @@ Vue.component("rest-timer", {
                 this.startTimer()
             }
         },
-        timerPause(active) {
-            if(active){
-                this.pauseTimer()
-            } else {
-                this.startTimer()
-            }
-        },
-        // timerResume(active) {
-        //     if(active){
-        //         this.pauseTimer()
-        //     }
-        // }
     },
     
     methods: {
@@ -411,14 +351,6 @@ Vue.component("rest-timer", {
         startTimer() {
             this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
         },
-
-        pauseTimer() {
-            clearInterval(this.timerInterval)
-        },
-
-        // resumeTimer() {
-        //     this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
-        // }
 
     },
 
@@ -440,8 +372,6 @@ Vue.component("total-timer", {
         'workoutTimeLimit',
         'restTimeLimit',
         'cycleTimeLimit',
-        'timerPause',
-        // 'timerResume'
     ],
 
 
@@ -457,7 +387,7 @@ Vue.component("total-timer", {
 
     computed: {
         timeLeft() {
-            const total = parseFloat(this.prepareTimeLimit) + (parseFloat(this.workoutTimeLimit) + parseFloat(this.restTimeLimit)) * parseFloat(this.cycleTimeLimit)
+            const total = (parseFloat(this.prepareTimeLimit) + (parseFloat(this.workoutTimeLimit) + parseFloat(this.restTimeLimit)) * parseFloat(this.cycleTimeLimit)) - parseFloat(this.restTimeLimit)
             return total - this.timePassed;
         },
 
@@ -474,49 +404,19 @@ Vue.component("total-timer", {
 
 
     watch: {
-        timeLeft(newValue) {
-            if (newValue === 0) {
-                this.onTimesUp();
-            }
-        },
-        timerActive(active) {
+        //if any on of Prepare, workout, rest times active, total timer also active
+        timerActive(active) { 
             if (active){
-                this.startTimer()
+                this.startTimer() 
             }
         },
-        timerPause(active) {
-            if(active){
-                this.pauseTimer()
-            }else{
-                this.startTimer()
-            }
-        },
-        // timerResume(active) {
-        //     if(active){
-        //         this.pauseTimer()
-        //     }
-        // }
     },
 
     
     methods: {
-        onTimesUp() {
-            this.timePassed = 0;
-            clearInterval(this.timerInterval);
-            this.$emit("done", "rest")
-        },
-
         startTimer() {
             this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
         },
-
-        pauseTimer() {
-            clearInterval(this.timerInterval)
-        },
-
-        // resumeTimer() {
-        //     this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
-        // }
     },
 
 })
@@ -549,8 +449,8 @@ Vue.component("calendar", {
             this.clicked = [false ,false ,false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
             for(let i = 0; i < this.clicked.length; i++) {
                 let year = this.currentYear
-                let month = this.currentMonthInNumber+1
-                let day = i + 1
+                let month = this.currentMonthInNumber+1 //because it starts as 0
+                let day = i + 1 //because it starts as 0
                 if(month < 10){
                     month = `0${month}`
                 }
@@ -560,7 +460,7 @@ Vue.component("calendar", {
                 let date = `${year}-${month}-${day}`
                 let matches = this.currentUser.day_detail.filter(day => day.day === date)
                 if (matches.length > 0) {
-                    // this.clicked.splice(index, 1, !this.clicked[index])
+                    // this.clicked.splice(i, 1, !this.clicked[i])
                     this.clicked[i] = true
                 }
             }
@@ -588,7 +488,7 @@ Vue.component("calendar", {
                 let date = `${year}-${month}-${day}`
                 let matches = this.currentUser.day_detail.filter(day => day.day === date)
                 if (matches.length > 0) {
-                    // this.clicked.splice(index, 1, !this.clicked[index])
+                    // this.clicked.splice(i, 1, !this.clicked[i])
                     this.clicked[i] = true
                 }
             }
@@ -668,7 +568,7 @@ Vue.component("calendar", {
                 let date = `${year}-${month}-${day}`
                 let matches = this.currentUser.day_detail.filter(day => day.day === date)
                 if (matches.length > 0) {
-                    // this.clicked.splice(index, 1, !this.clicked[index])
+                    // this.clicked.splice(i, 1, !this.clicked[i])
                     this.clicked[i] = true
                 }
             }
@@ -801,6 +701,7 @@ Vue.component("exercise-list", {
             axios.delete("http://localhost:8000/apis/v1/exercises/" + exercise.id + "/", 
             {headers: {"X-CSRFToken": this.csrf_token}
             }).then(response => this.loadExercise());
+            location.reload();
         },
 
 
@@ -862,35 +763,28 @@ new Vue({
         currentUser: {
             exercise_list: []
         },
-        restTimePause: false,
-        workoutTimePause: false,
-        prepareTimePause: false,
-        totalTimePause: false,
-        // restTimeResume: false,
-        // workoutTimeResume: false,
-        // prepareTimeResume: false,
-        // totalTimeResume: false
     },
 
     methods: {
         toggleTimer: function(doneTimer) {
+            // help!   If I put cycle of 1, it will only run prepareTimer and quit
             if(this.cyclesLeft === 2) {
                 this.restTimeActive = false
                 this.workoutTimeActive = false
                 if(!alert("Timer's done!")){window.location.reload();}
-            } else if(doneTimer === "workout"){
+            } else if(doneTimer === "prep") {
+                this.prepareTimeActive = false
+                this.workoutTimeActive = true
+                this.restTimeActive = false
+            } else if(doneTimer === "workout") {
                 this.restTimeActive = true
                 this.workoutTimeActive = false
                 this.random_list.shift()
                 this.cyclesLeft--
-            } else if(doneTimer === "rest"){
+            } else if(doneTimer === "rest") {
                 this.restTimeActive = false
                 this.workoutTimeActive = true
                 this.cyclesLeft--
-            } else if(doneTimer === "prep"){
-                this.prepareTimeActive = false
-                this.workoutTimeActive = true
-                this.restTimeActive = false
             }
         },
 
@@ -899,28 +793,9 @@ new Vue({
                 this.cyclesLeft = parseFloat(this.cycleTimeLimit) * 2
                 this.prepareTimeActive = true
                 this.totalTimeActive = true
+                // this.cycleTimeActive = true
                 this.random_list = this.listedExercise.slice()
                 this.random_list.sort(() => Math.random() - 0.5)
-            }
-        },
-
-        pauseWorkoutTimer: function() {
-            if(this.prepareTimeActive === true) {
-                prepareTimePause = true
-            } else if (this.workoutTimeActive === true){
-                workoutTimePause = true
-            } else if (restTimeActive === true) {
-                restTimePause = true
-            }
-        },
-
-        resumeWorkoutTimer: function() {
-            if(this.prepareTimeActive === false) {
-                prepareTimePause = false
-            } else if (this.workoutTimeActive === false) {
-                workoutTimePause = false
-            } else if (this.restTimeActive === false) {
-                restTimePause = false
             }
         },
 
@@ -941,9 +816,9 @@ new Vue({
     },
     computed: {
         totalTime: function() {
-            const total = parseFloat(this.prepareTimeLimit) + (parseFloat(this.workoutTimeLimit) + parseFloat(this.restTimeLimit)) * parseFloat(this.cycleTimeLimit)
+            const total = (parseFloat(this.prepareTimeLimit) + (parseFloat(this.workoutTimeLimit) + parseFloat(this.restTimeLimit)) * parseFloat(this.cycleTimeLimit)) - parseFloat(this.restTimeLimit)
             const minutes = Math.floor(total / 60);
-            let seconds = total % 60
+            const seconds = total % 60
 
             return `${minutes}:${seconds}`
         },

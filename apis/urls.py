@@ -1,10 +1,9 @@
 from django.urls import path
-from .views import YgtViewSet, ExerciseViewSet, CategoryViewSet, UserViewSet, CurrentUserView, DayViewSet
+from .views import ExerciseViewSet, CategoryViewSet, UserViewSet, CurrentUserView, DayViewSet
 from rest_framework.routers import DefaultRouter
 
 
 router = DefaultRouter()
-router.register('ygt', YgtViewSet, basename='ygts')
 router.register('exercises', ExerciseViewSet, basename='exercises')
 router.register('categories', CategoryViewSet, basename='categories')
 router.register('users', UserViewSet, basename='users')

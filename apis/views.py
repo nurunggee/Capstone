@@ -1,23 +1,8 @@
-from rest_framework import generics, viewsets, permissions, filters
-from ygt.models import Exercise, Category, Ygt, CustomUser, Day
-from .serializers import YgtSerializer, ExerciseSerializer, CategorySerializer, UserSerializer, DaySerializer
+from rest_framework import generics, viewsets, filters
+from ygt.models import Exercise, Category, CustomUser, Day
+from .serializers import ExerciseSerializer, CategorySerializer, UserSerializer, DaySerializer
 from users.models import CustomUser
 
-# class ListYgt(generics.ListCreateAPIView):
-#     queryset = models.Ygt.objects.all()
-#     serializer_class = YgtSerializer
-
-
-# class DetailYgt(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = models.Ygt.objects.all()
-#     serializer_class = YgtSerializer
-
-
-class YgtViewSet(viewsets.ModelViewSet):
-    queryset = Ygt.objects.all()
-    serializer_class = YgtSerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['title']
 
 class ExerciseViewSet(viewsets.ModelViewSet):
     queryset = Exercise.objects.all()

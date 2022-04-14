@@ -44,16 +44,6 @@
 
     {% csrf_token %}
     <div id="app">
-        
-        {% comment %} <div v-if="currentUser.id"></div>  {% endcomment %}
-
-        {% comment %} <prepare-timer :timer-active="prepareTimeActive" @done="toggleTimer" v-show="prepareTimeActive" :time-limit="prepareTimeLimit"></prepare-timer>
-        <workout-timer :timer-active="workoutTimeActive" @done="toggleTimer" v-show="workoutTimeActive" :time-limit="workoutTimeLimit"></workout-timer>
-        <rest-timer :timer-active="restTimeActive" @done="toggleTimer" v-show="restTimeActive" :time-limit="restTimeLimit"></rest-timer> {% endcomment %}
-        
-        
-            
-
         <div class="background">
             <div class="title">
                 <h2>Workout Timer</h2>
@@ -61,8 +51,6 @@
             <div class="rightSide">
                 <div class="workout">
                     <prepare-timer
-                        :timer-resume="prepareTimeResume" 
-                        :timer-pause="prepareTimePause" 
                         :timer-active="prepareTimeActive" 
                         @done="toggleTimer" 
                         v-show="prepareTimeActive" 
@@ -71,8 +59,6 @@
                         :cycle-time-limit="cycleTimeLimit">
                     </prepare-timer>
                     <workout-timer
-                        :timer-resume="workoutTimeResume" 
-                        :timer-pause="workoutTimePause" 
                         :timer-active="workoutTimeActive" 
                         @done="toggleTimer" 
                         v-show="workoutTimeActive" 
@@ -81,8 +67,6 @@
                         :cycle-time-limit="cycleTimeLimit">
                     </workout-timer>
                     <rest-timer
-                        :timer-resume="restTimeResume" 
-                        :timer-pause="restTimePause" 
                         :timer-active="restTimeActive" 
                         @done="toggleTimer" 
                         v-show="restTimeActive" 
@@ -114,7 +98,6 @@
                             :time-limit="totalTimeLimit">
                         </total-timer>
                     </span>
-                    {% comment %} <span class="value" v-else> [[ totalTime ]]</span> {% endcomment %}
                 </div>
             </div>
             <div class="bottom">
@@ -153,14 +136,9 @@
             <div class="start">
                 <div class="startButton">
                     <button @click="startWorkoutTimer" class="timeStartButton">Start</button>
-                    <button @click="pauseWorkoutTimer" class="timeStartButton">Pause</button>
-                    <button @click="resumeWorkoutTimer" class="timeStartButton">Resume</button>
                 </div>
             </div>
         </div>
-        
-        {% comment %} <calendar/> {% endcomment %}
-
     </div>
 
 

@@ -44,19 +44,19 @@
     
     {% if user.is_authenticated %}
         <div class="home">
-            <h1>Welcome {{ user.username }}!</h1>
-            <p><a href="{% url 'home' %}">Home</a></p>
-            <p><a href="{% url 'logout' %}">Logout</a></p>
+            <h1 class="account_name">Welcome {{ user.username }}!</h1>
+            <p class="account"><a href="{% url 'logout' %}">Logout</a></p>
         </div>
         {% csrf_token %}
         <div id="app">       
             
         </div>
     {% else %}
-        <h1>Welcome, visitor!</h1>
-        <p>You are not logged in.<a href="{% url 'login' %}">Login <a href="{% url 'users:signup' %}">Sign Up</a></a>
-
-        <p><a href="{% url 'password_reset' %}">Forgot Password?</a></p>
+        <h1 class="account_name">Welcome, visitor!</h1>
+        <p class="account">You are not logged in. &nbsp; <a href="{% url 'login' %}">Login</a> </p>
+            
+        <p class="account">Don't have account? &nbsp; <a href="{% url 'users:signup' %}">Sign Up</a></p>
+        <p class="account"><a href="{% url 'password_reset' %}">Forgot Password?</a></p>
     {% endif %}
 
 

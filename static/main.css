@@ -764,3 +764,13 @@ header h1{
 .blue2 {
   color: var(--blue);
 }
+
+.account {
+  display: flex;
+  justify-content: center;
+}
+
+.account_name{
+  margin-top: 50px;
+  margin-bottom: 20px;
+}

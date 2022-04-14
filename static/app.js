@@ -547,6 +547,23 @@ Vue.component("calendar", {
                 this.currentMonthInNumber++
             }
             this.clicked = [false ,false ,false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+            for(let i = 0; i < this.clicked.length; i++) {
+                let year = this.currentYear
+                let month = this.currentMonthInNumber+1
+                let day = i + 1
+                if(month < 10){
+                    month = `0${month}`
+                }
+                if(day < 10){
+                    day = `0${day}`
+                }
+                let date = `${year}-${month}-${day}`
+                let matches = this.currentUser.day_detail.filter(day => day.day === date)
+                if (matches.length > 0) {
+                    // this.clicked.splice(index, 1, !this.clicked[index])
+                    this.clicked[i] = true
+                }
+            }
         }, 
         
         prev() {
@@ -558,6 +575,23 @@ Vue.component("calendar", {
                 this.currentMonthInNumber--
             }
             this.clicked = [false ,false ,false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+            for(let i = 0; i < this.clicked.length; i++) {
+                let year = this.currentYear
+                let month = this.currentMonthInNumber+1
+                let day = i + 1
+                if(month < 10){
+                    month = `0${month}`
+                }
+                if(day < 10){
+                    day = `0${day}`
+                }
+                let date = `${year}-${month}-${day}`
+                let matches = this.currentUser.day_detail.filter(day => day.day === date)
+                if (matches.length > 0) {
+                    // this.clicked.splice(index, 1, !this.clicked[index])
+                    this.clicked[i] = true
+                }
+            }
         },
 
         todayDate(date){
@@ -578,9 +612,17 @@ Vue.component("calendar", {
             if(date < 10){
                 date = `0${date}`
             }
-
+            
             let currentDate = `${this.currentYear}-${currentMonth}-${date}`
+            
+            console.log(currentDate)
 
+            
+            for (let day of this.currentUser.day_detail) {
+                if(day.day === currentDate) {
+                    return
+                }
+            }
             this.clicked.splice(index, 1, !this.clicked[index])
             axios({
                 method: "post",
@@ -593,7 +635,7 @@ Vue.component("calendar", {
                     "user": [this.currentUser.id]
                 }
             }).then(response => {
-                this.loadCurrentUser()
+                this.$emit("date-created")
             })
         }
     },
@@ -611,6 +653,28 @@ Vue.component("calendar", {
         }
     },
 
+    watch: {
+        currentUser: function(value) {
+            for(let i = 0; i < this.clicked.length; i++) {
+                let year = this.currentYear
+                let month = this.currentMonthInNumber+1
+                let day = i + 1
+                if(month < 10){
+                    month = `0${month}`
+                }
+                if(day < 10){
+                    day = `0${day}`
+                }
+                let date = `${year}-${month}-${day}`
+                let matches = this.currentUser.day_detail.filter(day => day.day === date)
+                if (matches.length > 0) {
+                    // this.clicked.splice(index, 1, !this.clicked[index])
+                    this.clicked[i] = true
+                }
+            }
+        }
+    },
+
     template: `
         <div class="container">
             <h1>My Calendar</h1>
@@ -625,7 +689,7 @@ Vue.component("calendar", {
             <section>
                 <div class="date">
                     <p v-for="day in startDay" :key="day"></p>
-                    <p v-for="(date, index) in daysInMonth" :class="{blue2 : todayDate(date), blue : clicked[index], white : !clicked[index]}" @click="dayClick(date, index) ? clicked[index] : !clicked[index]">{{ date }}</p>
+                    <p v-for="(date, index) in daysInMonth" :class="{blue2 : todayDate(date), blue : clicked[index], white : !clicked[index]}" @click="dayClick(date, index)">{{ date }}</p>
                 </div>
             </section>
 
@@ -756,10 +820,6 @@ Vue.component("exercise-list", {
             <header>
                 <h1>List of Exercises: </h1>
                 <div id ="new-exercise-form">
-                    <select id="term" name="term">
-                        <option value="users">Users</option>
-                        <option value="pokemon"selected>Pokemon</option>
-                    </select>
                     <input @keyup.enter="createExercise" type="text" id="new-exercise-input" v-model="newExercise.name" placeholder="New Exercise?"><br>
                     <button @click="createExercise" id="new-exercise-submit">Submit</button>
                 </div>

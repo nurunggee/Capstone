@@ -4,13 +4,6 @@ from ygt import models
 from users.models import CustomUser
 from ygt.models import Exercise, Category, Day, Ygt
 
-# class NestedUserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         fields = (
-#             'username',
-#             'id',
-#         )
-#         model = CustomUser
 
 class NestedExerciseSerializer(serializers.ModelSerializer):
     class Meta: 
@@ -28,6 +21,13 @@ class NestedCategorySerializer(serializers.ModelSerializer):
             'name',
         )
         model = Category
+
+class NestedDaySerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'day',
+        )
+        model = Day
 
 class YgtSerializer(serializers.ModelSerializer):
     class Meta:
@@ -59,18 +59,6 @@ class CategorySerializer(serializers.ModelSerializer):
         )
         model = Category
 
-class UserSerializer(serializers.ModelSerializer):
-    added_info = NestedExerciseSerializer(source='added', many=True, read_only=True)
-    class Meta :
-        fields = (
-            'id',
-            'username',
-            'added',
-            'added_info',
-            'days'
-        )
-        model = CustomUser
-
 class DaySerializer(serializers.ModelSerializer):
     class Meta :
         fields = (
@@ -79,3 +67,22 @@ class DaySerializer(serializers.ModelSerializer):
             'user'
         )
         model = Day
+
+class UserSerializer(serializers.ModelSerializer):
+    added_info = NestedExerciseSerializer(source='added', many=True, read_only=True)
+    day_detail = NestedDaySerializer(source="days", many=True, read_only=True)
+    class Meta :
+        fields = (
+            'id',
+            'username',
+            'added',
+            'added_info',
+            'days',
+            'day_detail'
+        )
+        model = CustomUser
+
+
+
+
+

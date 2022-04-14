@@ -515,7 +515,7 @@ Vue.component("calendar", {
             
             let currentDate = `${this.currentYear}-${currentMonth}-${date}`
             
-            console.log(currentDate)
+            // console.log(currentDate)
 
             for (let day of this.currentUser.day_detail) {
                 if(day.day === currentDate) {

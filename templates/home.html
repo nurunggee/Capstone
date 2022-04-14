@@ -50,30 +50,32 @@
             </div>
             <div class="rightSide">
                 <div class="workout">
-                    <prepare-timer
-                        :timer-active="prepareTimeActive" 
-                        @done="toggleTimer" 
-                        v-show="prepareTimeActive" 
-                        :exercise-queue='random_list' 
-                        :time-limit="prepareTimeLimit" 
-                        :cycle-time-limit="cycleTimeLimit">
-                    </prepare-timer>
-                    <workout-timer
-                        :timer-active="workoutTimeActive" 
-                        @done="toggleTimer" 
-                        v-show="workoutTimeActive" 
-                        :exercise-queue='random_list' 
-                        :time-limit="workoutTimeLimit" 
-                        :cycle-time-limit="cycleTimeLimit">
-                    </workout-timer>
-                    <rest-timer
-                        :timer-active="restTimeActive" 
-                        @done="toggleTimer" 
-                        v-show="restTimeActive" 
-                        :time-limit="restTimeLimit" 
-                        :exercise-queue='random_list' 
-                        :cycle-time-limit="cycleTimeLimit">
-                    </rest-timer>
+                    {% if user.is_authenticated %}
+                        <prepare-timer
+                            :timer-active="prepareTimeActive" 
+                            @done="toggleTimer" 
+                            v-show="prepareTimeActive" 
+                            :exercise-queue='random_list' 
+                            :time-limit="prepareTimeLimit" 
+                            :cycle-time-limit="cycleTimeLimit">
+                        </prepare-timer>
+                        <workout-timer
+                            :timer-active="workoutTimeActive" 
+                            @done="toggleTimer" 
+                            v-show="workoutTimeActive" 
+                            :exercise-queue='random_list' 
+                            :time-limit="workoutTimeLimit" 
+                            :cycle-time-limit="cycleTimeLimit">
+                        </workout-timer>
+                        <rest-timer
+                            :timer-active="restTimeActive" 
+                            @done="toggleTimer" 
+                            v-show="restTimeActive" 
+                            :time-limit="restTimeLimit" 
+                            :exercise-queue='random_list' 
+                            :cycle-time-limit="cycleTimeLimit">
+                        </rest-timer>
+                    {% endif %}
                 </div>
             </div>
             <div class="leftSide">
@@ -88,15 +90,17 @@
                 <div class="exercise">
                     <span class="label">Total Time</span>
                     <span class="value"> 
-                        <total-timer 
-                            :cycle-time-limit="cycleTimeLimit"
-                            :workout-time-limit="workoutTimeLimit" 
-                            :prepare-time-limit="prepareTimeLimit" 
-                            :rest-time-limit="restTimeLimit"
-                            :timer-active="totalTimeActive" 
-                            @done="toggleTimer" 
-                            :time-limit="totalTimeLimit">
-                        </total-timer>
+                        {% if user.is_authenticated %}
+                            <total-timer 
+                                :cycle-time-limit="cycleTimeLimit"
+                                :workout-time-limit="workoutTimeLimit" 
+                                :prepare-time-limit="prepareTimeLimit" 
+                                :rest-time-limit="restTimeLimit"
+                                :timer-active="totalTimeActive" 
+                                @done="toggleTimer" 
+                                :time-limit="totalTimeLimit">
+                            </total-timer>
+                        {% endif %}
                     </span>
                 </div>
             </div>

@@ -14,7 +14,6 @@ Vue.component("prepare-timer", {
         'exerciseQueue',
     ],
 
-
     template: `
         <div class="timers">
             <div class="base-timer">
@@ -39,7 +38,7 @@ Vue.component("prepare-timer", {
             </div>
             <div class="exercise_name">
                 <p class="current_exercise">Prepare</p>
-                <p class="next_exercise">NEXT   {{exerciseQueue[0].name}}</p> 
+                <p class="next_exercise" v-if="exerciseQueue[0]">NEXT   {{exerciseQueue[0].name}}</p> 
             </div>
         </div>
 
@@ -158,7 +157,7 @@ Vue.component("workout-timer", {
                 </span>
             </div>
             <div class="exercise_name">
-                <p class="current_exercise_exercise">{{exerciseQueue[0].name}}</p>
+                <p class="current_exercise_exercise" v-if="exerciseQueue[0]">{{exerciseQueue[0].name}}</p>
             </div>
         </div>
     `,
@@ -278,7 +277,7 @@ Vue.component("rest-timer", {
             </div>
             <div class="exercise_name">
                 <p class="current_exercise">REST</p>
-                <p class="next_exercise">NEXT   {{exerciseQueue[0].name}}</p> 
+                <p class="next_exercise" v-if="exerciseQueue[0]">NEXT   {{exerciseQueue[0].name}}</p> 
             </div>
         </div>
     `,
@@ -527,7 +526,9 @@ Vue.component("calendar", {
                             "X-CSRFToken": this.csrf_token
                         },
                     }).then(response => {
+                        this.clicked[index] = !this.clicked[index]
                         this.$emit("date-created")
+                        
                     })
                     return
                 }
@@ -773,11 +774,10 @@ new Vue({
             exercise_list: []
         },
     },
-
+     
     methods: {
         toggleTimer: function(doneTimer) {
-            // help!   If I put cycle of 1, it will only run prepareTimer and quit
-            if(this.cyclesLeft === 3) {
+            if(this.cyclesLeft === 2) {
                 this.restTimeActive = false
                 this.workoutTimeActive = false
                 if(!alert("Timer's done!")){window.location.reload();}
@@ -802,7 +802,6 @@ new Vue({
                 this.cyclesLeft = parseFloat(this.cycleTimeLimit) * 2
                 this.prepareTimeActive = true
                 this.totalTimeActive = true
-                // this.cycleTimeActive = true
                 this.random_list = this.listedExercise.slice()
                 this.random_list.sort(() => Math.random() - 0.5)
             }

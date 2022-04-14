@@ -459,7 +459,6 @@ Vue.component("calendar", {
                 let date = `${year}-${month}-${day}`
                 let matches = this.currentUser.day_detail.filter(day => day.day === date)
                 if (matches.length > 0) {
-                    // this.clicked.splice(i, 1, !this.clicked[i])
                     this.clicked[i] = true
                 }
             }

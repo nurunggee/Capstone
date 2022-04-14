@@ -23,6 +23,7 @@ class NestedCategorySerializer(serializers.ModelSerializer):
 class NestedDaySerializer(serializers.ModelSerializer):
     class Meta:
         fields = (
+            'id',
             'day',
         )
         model = Day

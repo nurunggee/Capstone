@@ -517,13 +517,22 @@ Vue.component("calendar", {
             
             console.log(currentDate)
 
-            
             for (let day of this.currentUser.day_detail) {
                 if(day.day === currentDate) {
-                    return
+                    console.log("delete")
+                    axios({
+                        method: "delete",
+                        url: `/apis/v1/days/${day.id}/`,
+                        headers: {
+                            "X-CSRFToken": this.csrf_token
+                        },
+                    }).then(response => {
+                        this.$emit("date-created")
+                    })
                 }
+                
             }
-            this.clicked.splice(index, 1, !this.clicked[index])
+
             axios({
                 method: "post",
                 url: "/apis/v1/days/",
@@ -568,10 +577,10 @@ Vue.component("calendar", {
                 let date = `${year}-${month}-${day}`
                 let matches = this.currentUser.day_detail.filter(day => day.day === date)
                 if (matches.length > 0) {
-                    // this.clicked.splice(i, 1, !this.clicked[i])
                     this.clicked[i] = true
                 }
             }
+            this.clicked = this.clicked.slice(0, this.clicked.length)
         }
     },
 
@@ -768,7 +777,7 @@ new Vue({
     methods: {
         toggleTimer: function(doneTimer) {
             // help!   If I put cycle of 1, it will only run prepareTimer and quit
-            if(this.cyclesLeft === 2) {
+            if(this.cyclesLeft === 3) {
                 this.restTimeActive = false
                 this.workoutTimeActive = false
                 if(!alert("Timer's done!")){window.location.reload();}

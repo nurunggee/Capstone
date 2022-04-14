@@ -529,8 +529,8 @@ Vue.component("calendar", {
                     }).then(response => {
                         this.$emit("date-created")
                     })
+                    return
                 }
-                
             }
 
             axios({

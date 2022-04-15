@@ -41,7 +41,6 @@ Vue.component("prepare-timer", {
                 <p class="next_exercise" v-if="exerciseQueue[0]">NEXT   {{exerciseQueue[0].name}}</p> 
             </div>
         </div>
-
     `,
 
 
@@ -586,20 +585,17 @@ Vue.component("calendar", {
         <div class="container">
             <h1>My Calendar</h1>
             <h3> {{currentMonthInName}} {{currentYear}}</h3>
-
             <section>
                 <div class="days">
                     <p v-for="(day, index) in days" :key="index">{{ day }}</p>
                 </div>
             </section>
-
             <section>
                 <div class="date">
                     <p v-for="day in startDay" :key="day"></p>
                     <p v-for="(date, index) in daysInMonth" :class="{blue2 : todayDate(date), blue : clicked[index], white : !clicked[index]}" @click="dayClick(date, index)">{{ date }}</p>
                 </div>
             </section>
-
             <section class="button">
                 <button @click="prev" class="btn btn-primary">Prev</button>
                 <button @click="next" class="btn btn-primary">Next</button>
@@ -732,7 +728,6 @@ Vue.component("exercise-list", {
                     <button @click="createExercise" id="new-exercise-submit">Submit</button>
                 </div>
             </header>
-
             <div class="main">
                 <section class="exercise-list">
                     <h2>Exercises</h2>

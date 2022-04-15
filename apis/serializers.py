@@ -53,6 +53,15 @@ class CategorySerializer(serializers.ModelSerializer):
         )
         model = Category
 
+class DaySerializer(serializers.ModelSerializer):
+    class Meta :
+        fields = (
+            'id',
+            'day',
+            'user'
+        )
+        model = Day
+
 class UserSerializer(serializers.ModelSerializer):
     added_info = NestedExerciseSerializer(source='added', many=True, read_only=True)
     day_detail = NestedDaySerializer(source="days", many=True, read_only=True)
@@ -66,17 +75,6 @@ class UserSerializer(serializers.ModelSerializer):
             'day_detail'
         )
         model = CustomUser
-
-class DaySerializer(serializers.ModelSerializer):
-    class Meta :
-        fields = (
-            'id',
-            'day',
-            'user'
-        )
-        model = Day
-
-
 
 
 

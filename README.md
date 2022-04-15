@@ -17,7 +17,8 @@ PROJECT OVERVIEW:
 
 User Stories:
 
-	1. As a traveler, I want to have a timer for interval training so I can exercise anytime and anywhere.
+	1. As a traveler, I want to have a timer for interval training so I can exercise anytime 
+	and anywhere.
 
 		• Create prepare, workout, rest, and total timers.
 		• When the user fill in all the required fields, the app will give total time.
@@ -57,7 +58,8 @@ DATA MODEL:
 
 Schedule: 
 
-	Week 1[1~5]: Focus on building an interval timer(prepare, workout, rest, and total) for the user with customizable features
+	Week 1[1~5]: Focus on building an interval timer(prepare, workout, rest, and total) 
+	for the user with customizable features
 
 	Week 1[6~7]: User Registration and login authentication
 

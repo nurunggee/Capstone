@@ -16,8 +16,9 @@ FEATURES:
 	1. As a traveler, I want to have an automatic circuit training timer for workout and rest between workouts, because I don’t have a timer with me all the time.
 
 User needs to add times for workout, rest, Total time. (Use selection drop box)
-Once, the user set the time for everything, it will give total time. 
-		ex) Total time - 20, 30, 45 minutes, Workouts - 20, 45 seconds, Rests - 10, 15 seconds
+Once, the user set the time for everything, it will give total time.
+
+ex) Total time - 20, 30, 45 minutes, Workouts - 20, 45 seconds, Rests - 10, 15 seconds
 
 When it starts, give 5 seconds for the preparation
 

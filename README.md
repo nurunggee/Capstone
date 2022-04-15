@@ -57,12 +57,12 @@ DATA MODEL:
 
 Schedule: 
 
-	week 1[1~5]: Focus on building an interval timer(prepare, workout, rest, and total) for the user with customizable features
+	Week 1[1~5]: Focus on building an interval timer(prepare, workout, rest, and total) for the user with customizable features
 
-	week 1[6~7]: User Registration and login authentication
+	Week 1[6~7]: User Registration and login authentication
 
-	week 2[1~3]: CSS and add more workouts into the workout list
+	Week 2[1~3]: CSS and add more workouts into the workout list
 
-	week 2[4~7] & week 3[1]: Make the workout tracker (calendar)
+	Week 2[4~7] & week 3[1]: Make the workout tracker (calendar)
 	
-	week 3[2-4]: Testing and minor fixes
+	Week 3[2-4]: Testing and minor fixes

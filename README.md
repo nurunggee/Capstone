@@ -65,4 +65,4 @@ Schedule:
 
 	Week 2[4~7] & week 3[1]: Make the workout tracker (calendar)
 	
-	Week 3[2-4]: Testing and minor fixes
+	Week 3[2-4]: Test and minor fixes

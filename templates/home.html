@@ -108,7 +108,7 @@
                 <div class="bottom1">
                     <div class="prepare">
                         <span class="value">
-                            <input v-model="prepareTimeLimit" id="prepareValue" placeholder="00:00" @keyup.enter="startWorkoutTimer">
+                            <input v-model="prepareTimeInput" id="prepareValue" placeholder="00:00" @keyup.enter="startWorkoutTimer">
                         </span>
                         <span class="label">
                             Prepare
@@ -118,7 +118,7 @@
                 <div class="bottom2">
                     <div class="work">
                         <span class="value">
-                            <input v-model="workoutTimeLimit" id="workValue" placeholder="00:00" @keyup.enter="startWorkoutTimer">
+                            <input v-model="workoutTimeInput" id="workValue" placeholder="00:00" @keyup.enter="startWorkoutTimer">
                         </span>
                         <span class="label">
                             Work Out
@@ -128,7 +128,7 @@
                 <div class="bottom3">
                     <div class="rest">
                         <span class="value">
-                            <input v-model="restTimeLimit" id="restValue" placeholder="00:00" @keyup.enter="startWorkoutTimer">
+                            <input v-model="restTimeInput" id="restValue" placeholder="00:00" @keyup.enter="startWorkoutTimer">
                         </span>
                         <span class="label">
                             Rest

@@ -486,7 +486,6 @@ Vue.component("calendar", {
                 let date = `${year}-${month}-${day}`
                 let matches = this.currentUser.day_detail.filter(day => day.day === date)
                 if (matches.length > 0) {
-                    // this.clicked.splice(i, 1, !this.clicked[i])
                     this.clicked[i] = true
                 }
             }
@@ -513,7 +512,6 @@ Vue.component("calendar", {
             
             let currentDate = `${this.currentYear}-${currentMonth}-${date}`
             
-            // console.log(currentDate)
 
             for (let day of this.currentUser.day_detail) {
                 if(day.day === currentDate) {
@@ -772,6 +770,9 @@ new Vue({
         currentUser: {
             exercise_list: []
         },
+        prepareTimeInput: "",
+        workoutTimeInput: "",
+        restTimeInput: "",
     },
      
     methods: {
@@ -797,7 +798,11 @@ new Vue({
         },
 
         startWorkoutTimer: function() {
-            if(this.totalTime !== "NaN:NaN"){
+            console.log(this.prepareTimeLimit, this.workoutTimeLimit, this.restTimeLimit)
+            if(this.prepareTimeInput && this.workoutTimeInput && this.restTimeInput){
+                this.prepareTimeLimit = this.prepareTimeInput
+                this.workoutTimeLimit = this.workoutTimeInput
+                this.restTimeLimit = this.restTimeInput
                 this.cyclesLeft = parseFloat(this.cycleTimeLimit) * 2
                 this.prepareTimeActive = true
                 this.totalTimeActive = true
@@ -823,9 +828,11 @@ new Vue({
     },
     computed: {
         totalTime: function() {
-            const total = (parseFloat(this.prepareTimeLimit) + (parseFloat(this.workoutTimeLimit) + parseFloat(this.restTimeLimit)) * parseFloat(this.cycleTimeLimit)) - parseFloat(this.restTimeLimit)
+            const total = (this.totalTimeActive ? parseFloat(this.prepareTimeLimit) : parseFloat(this.prepareTimeInput) + (this.totalTimeActive ? parseFloat(this.workoutTimeLimit) : parseFloat(this.workoutTimeInput) + this.totalTimeActive ? parseFloat(this.restTimeLimit) : parseFloat(this.restTimeInput)) * parseFloat(this.cycleTimeLimit)) -  this.totalTimeActive ? parseFloat(this.restTimeLimit) : parseFloat(this.restTimeInput)
+            // const total = (parseFloat(this.prepareTimeInput) + (parseFloat(this.workoutTimeInput) + parseFloat(this.restTimeInput)) * parseFloat(this.cycleTimeLimit)) - parseFloat(this.restTimeInput)
+
             const minutes = Math.floor(total / 60);
-            const seconds = total % 60
+            const seconds = total % 60;
 
             return `${minutes}:${seconds}`
         },

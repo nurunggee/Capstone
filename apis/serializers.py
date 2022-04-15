@@ -2,7 +2,7 @@ from rest_framework import serializers
 from users.models import CustomUser
 from ygt.models import Exercise, Category, Day
 
-
+################ Nested Serializers ################ 
 class NestedExerciseSerializer(serializers.ModelSerializer):
     class Meta: 
         fields = (
@@ -28,6 +28,9 @@ class NestedDaySerializer(serializers.ModelSerializer):
         )
         model = Day
 
+
+
+################ Serializers ################ 
 class ExerciseSerializer(serializers.ModelSerializer):
     category_detail = NestedCategorySerializer(source='categories', many=True, read_only=True)
     class Meta: 
@@ -50,15 +53,6 @@ class CategorySerializer(serializers.ModelSerializer):
         )
         model = Category
 
-class DaySerializer(serializers.ModelSerializer):
-    class Meta :
-        fields = (
-            'id',
-            'day',
-            'user'
-        )
-        model = Day
-
 class UserSerializer(serializers.ModelSerializer):
     added_info = NestedExerciseSerializer(source='added', many=True, read_only=True)
     day_detail = NestedDaySerializer(source="days", many=True, read_only=True)
@@ -72,6 +66,17 @@ class UserSerializer(serializers.ModelSerializer):
             'day_detail'
         )
         model = CustomUser
+
+class DaySerializer(serializers.ModelSerializer):
+    class Meta :
+        fields = (
+            'id',
+            'day',
+            'user'
+        )
+        model = Day
+
+
 
 
 

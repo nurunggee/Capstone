@@ -12,10 +12,3 @@ router.register('days', DayViewSet, basename='days')
 urlpatterns = router.urls + [
     path('currentuser/', CurrentUserView.as_view())
 ]
-
-# urlpatterns = 'exercise'
-
-# urlpatterns = [
-#     path('', ListYgt.as_view()),
-#     path('<int:pk>/', DetailYgt.as_view()),
-# ]

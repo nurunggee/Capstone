@@ -3,11 +3,6 @@ from django.db import models
 from users.models import CustomUser
 from django.contrib.auth import get_user_model
 
-# class Ygt(models.Model):
-#     title = models.CharField(max_length=200)
-
-#     def __str__(self):
-#         return self.title
         
 class Exercise(models.Model):
     name = models.CharField(max_length=200)

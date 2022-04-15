@@ -11,7 +11,7 @@ NAME:
 
 PROJECT OVERVIEW: 
 	
-	Anywhere, Anytime YGT provides you random functional fitness workouts!
+	Anywhere, Anytime YGT provides you personal functional fitness workouts!
 
 
 

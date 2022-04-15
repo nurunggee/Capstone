@@ -5,13 +5,13 @@ Capstone Proposal
 
 NAME: 
 	
-	YGT(You Got This!) - Home Workout Random Generator W/ Timer
+	YGT(You Got This!) - Home Workout Timer for Interval Training
 
 
 
 PROJECT OVERVIEW: 
 	
-	Anywhere, Anytime YGT provides you random functional fitness workouts!
+	Anywhere, Anytime YGT provides you personal functional fitness workouts!
 
 
 

@@ -701,10 +701,20 @@ Vue.component("exercise-list", {
 
         },
         deleteExercise(exercise) {
-            axios.delete("http://localhost:8000/apis/v1/exercises/" + exercise.id + "/", 
-            {headers: {"X-CSRFToken": this.csrf_token}
-            }).then(response => this.loadExercise());
-            location.reload();
+            // axios.delete("http://localhost:8000/apis/v1/exercises/" + exercise.id + "/", 
+            // {headers: {"X-CSRFToken": this.csrf_token}
+            // }).then(response => this.loadExercise());
+            // location.reload();
+            axios({
+                method: "delete",
+                url: `/apis/v1/exercises/${exercise.id}/`,
+                headers: {
+                    "X-CSRFToken": this.csrf_token
+                },
+            }).then(response => {
+                this.loadExercise(); 
+                location.reload();
+            })
         },
 
 
